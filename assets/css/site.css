@@ -1,0 +1,183 @@
+/*
+ * SLV Bike Bus site styles, layered on Pico CSS 2.1.1.
+ *
+ * STATUS: functional styles only. Brand colors and typefaces are pending
+ * Ben's review of the token plan (see DESIGN-PLAN.md). When approved, set
+ * the tokens below and the @font-face rules; components already use them.
+ */
+
+/* ---------- Tokens (placeholders until the design review) ---------- */
+:root {
+  --bb-cancelled-bg: #b3261e;
+  --bb-cancelled-fg: #ffffff;
+  --bb-changed-bg: #f2c200;
+  --bb-changed-fg: #1a1a1a;
+  --bb-info-bg: #1f5f99;
+  --bb-info-fg: #ffffff;
+  --bb-route: #1f7a4d;
+  --bb-todo: #8f4f00;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bb-cancelled-bg: #ff6b5f;
+    --bb-cancelled-fg: #1a0000;
+    --bb-info-bg: #8cc4ff;
+    --bb-info-fg: #04192d;
+    --bb-route: #5fd49a;
+    --bb-todo: #ffb74d;
+  }
+}
+
+/* ---------- Basics ---------- */
+html { overflow-x: hidden; }
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  z-index: 1000;
+  padding: 0.5rem 1rem;
+  background: var(--pico-background-color);
+  color: var(--pico-primary);
+}
+.skip-link:focus { top: 0.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* Anchor targets clear the top of the viewport */
+section[id] { scroll-margin-top: 1rem; }
+
+/* ---------- Header ---------- */
+.site-header nav { flex-wrap: wrap; }
+.site-name { font-weight: 700; }
+.section-nav { flex-wrap: wrap; }
+.section-nav li { padding-block: 0.25rem; }
+@media (max-width: 575px) {
+  .site-header nav { flex-direction: column; align-items: flex-start; }
+  .site-header nav ul { margin-inline: 0; }
+  .site-header nav ul:first-child li { padding-bottom: 0; padding-inline-start: 0; }
+  .section-nav li { padding-inline: 0 0.9rem; }
+  .section-nav a { font-size: 0.95rem; }
+}
+
+/* ---------- Status banner ---------- */
+.status-banner { margin: 0; }
+.status-item {
+  padding: 0.9rem 1rem;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  text-align: center;
+}
+.status-item a { color: inherit; text-decoration: underline; }
+.status-cancelled {
+  background: var(--bb-cancelled-bg);
+  color: var(--bb-cancelled-fg);
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding-block: 1.1rem;
+}
+.status-changed { background: var(--bb-changed-bg); color: var(--bb-changed-fg); }
+.status-info    { background: var(--bb-info-bg);    color: var(--bb-info-fg); }
+.status-label { text-transform: none; }
+
+/* ---------- Hero ---------- */
+.hero { padding-block: 0.5rem 1.5rem; }
+.hero-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+.hero-top h1 { margin: 0; }
+.logo-placeholder {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 0.7rem;
+  line-height: 1.1;
+  border: 2px dashed var(--bb-todo);
+  color: var(--bb-todo);
+  border-radius: 8px;
+}
+.hero-lede { margin-bottom: 0.75rem; }
+.hero-facts { margin: 0 0 1.25rem; }
+.hero-facts > div {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.5rem;
+  padding-block: 0.4rem;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+}
+.hero-facts dt { font-weight: 700; margin: 0; }
+.hero-facts dd { margin: 0; }
+
+/* ---------- Steps ---------- */
+.steps li { margin-bottom: 0.6rem; }
+
+/* ---------- Route map ---------- */
+.route-map-figure { margin-bottom: 1.25rem; }
+.route-map {
+  position: relative;
+  height: 340px;
+  border-radius: var(--pico-border-radius);
+  background: var(--pico-card-sectioning-background-color);
+  overflow: hidden;
+}
+.route-map-fallback { padding: 1rem; margin: 0; }
+.route-map-figure figcaption { font-size: 0.9rem; padding-top: 0.4rem; }
+.route-tooltip { font-weight: 700; }
+.map-unlock {
+  position: absolute;
+  z-index: 1000;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: auto;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.9rem;
+}
+/* Undo Pico's [role=button] styling on Leaflet's zoom controls */
+.route-map .leaflet-bar a {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  margin: 0;
+  line-height: 34px;
+  font-size: 20px;
+  font-family: system-ui, sans-serif;
+  color: #1a1a1a;
+  background: #fff;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0;
+  box-shadow: none;
+}
+.route-map .leaflet-bar a:last-child { border-bottom: 0; }
+
+/* ---------- Route list (transit-line treatment comes with the design pass) ---------- */
+.route-stops li { margin-bottom: 0.6rem; }
+.route-stops .stop-time { display: block; font-weight: 700; }
+
+.note { font-size: 0.95rem; }
+
+/* ---------- TODO markers (remove the class once content is final) ---------- */
+.todo {
+  display: block;
+  padding: 0.4rem 0.6rem;
+  border: 2px dashed var(--bb-todo);
+  color: var(--bb-todo);
+  font-size: 0.9rem;
+  border-radius: 4px;
+}
+p.todo { margin-block: 0.5rem 1rem; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  font-size: 0.9rem;
+  border-top: 1px solid var(--pico-muted-border-color);
+  padding-block: 1.5rem 2.5rem;
+}
