@@ -13,7 +13,8 @@
 (function () {
   "use strict";
 
-  var LEVELS = { cancelled: "Cancelled", changed: "Change today", info: "Today" };
+  // Label shown before the message; info notices are just the message.
+  var LEVELS = { cancelled: "Cancelled", changed: "Change today", info: "" };
   var ROUTE_NAMES = { sle: "SLE Bike Bus" };
 
   var el = document.getElementById("status-banner");
@@ -52,11 +53,13 @@
         box.appendChild(icon);
       }
 
-      var label = document.createElement("strong");
-      label.className = "status-label";
-      label.textContent = LEVELS[item.level] + ":";
-      box.appendChild(label);
-      box.appendChild(document.createTextNode(" "));
+      if (LEVELS[item.level]) {
+        var label = document.createElement("strong");
+        label.className = "status-label";
+        label.textContent = LEVELS[item.level] + ":";
+        box.appendChild(label);
+        box.appendChild(document.createTextNode(" "));
+      }
 
       if (links[item.route]) {
         var a = document.createElement("a");
