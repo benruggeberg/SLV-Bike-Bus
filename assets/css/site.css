@@ -1,9 +1,9 @@
 /*
  * SLV Bike Bus site styles, layered on Pico CSS 2.1.1.
  * Brand palette (from Ben's logo work): Redwood Green #1B4332, Bark Brown #5A3A28,
- * Pumpkin Orange #E07A2F, Redwood Cream #F6EBD7, School Red #C1121F.
- * Orange is only ever a background under dark text (or text on dark ink);
- * orange text on cream fails contrast.
+ * Sun Gold #FC9D2B (the sun in the family illustration), Redwood Cream #F6EBD7,
+ * School Red #C1121F. Gold is only ever a background under dark text (or text
+ * on dark ink); gold text on cream fails contrast.
  */
 
 /* ---------- Fonts (self-hosted, SIL OFL) ---------- */
@@ -49,7 +49,7 @@
 :root:not([data-theme]) {
   --bb-forest: #1B4332;
   --bb-red: #C1121F;
-  --bb-orange: #E07A2F;
+  --bb-sun: #FC9D2B;
   --bb-brown: #5A3A28;
   --bb-cream: #F6EBD7;
   --bb-ink: #16201b;
@@ -91,7 +91,7 @@
   --pico-primary-hover-underline: #0f2a1f;
   --pico-primary-focus: rgba(27, 67, 50, 0.35);
   --pico-primary-inverse: #ffffff;
-  --pico-text-selection-color: rgba(224, 122, 47, 0.35);
+  --pico-text-selection-color: rgba(252, 157, 43, 0.35);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
@@ -101,7 +101,7 @@
     --bb-paper: #23302a;
     --bb-sky: #2a3a31;
     --bb-brown: #3d271b;
-    --bb-focus: var(--bb-orange);
+    --bb-focus: var(--bb-sun);
     --bb-track: #3a4b42;
     --bb-track-marker: #5f7469;
     --bb-muted: #a9b5ae;
@@ -224,13 +224,6 @@ section[id] { scroll-margin-top: 1rem; }
 /* The family's sandy path lands on the hills: overlap most of the scene strip. */
 .landing-art { position: relative; z-index: 1; text-align: center; margin-bottom: calc(var(--scene-h) * -0.72); }
 .family-landing { width: min(86vw, 460px); }
-.tagline .sep { margin-inline: 0.45em; color: var(--bb-orange); }
-.tagline {
-  margin: -0.2rem 0 1rem;
-  font-family: var(--bb-heading-font);
-  font-weight: 700;
-  color: var(--bb-forest);
-}
 .family-404 { width: min(80vw, 380px); margin: 0.5rem auto 1.25rem; }
 
 /* ---------- Status banner ---------- */
@@ -258,15 +251,15 @@ section[id] { scroll-margin-top: 1rem; }
   border-bottom: 5px solid rgba(0, 0, 0, 0.35);
 }
 .status-icon { width: 1.6em; height: 1.6em; flex: none; }
-/* Info: plain pumpkin orange. Changed: the same orange with black hazard
+/* Info: plain sun gold. Changed: the same gold with black hazard
    stripes top and bottom, like a construction sign. */
-.status-info { background: var(--bb-orange); color: #16201b; font-weight: 700; }
+.status-info { background: var(--bb-sun); color: #16201b; font-weight: 700; }
 .status-changed {
-  --stripes: repeating-linear-gradient(-45deg, #16201b 0 10px, var(--bb-orange) 10px 20px);
+  --stripes: repeating-linear-gradient(-45deg, #16201b 0 10px, var(--bb-sun) 10px 20px);
   background:
     var(--stripes) top / 100% 8px no-repeat,
     var(--stripes) bottom / 100% 8px no-repeat,
-    var(--bb-orange);
+    var(--bb-sun);
   color: #16201b;
   font-weight: 700;
   padding-block: 1.25rem;
@@ -277,7 +270,7 @@ main { padding-top: 1.25rem; }
 .hero h1 { margin-bottom: 0.4rem; }
 .hero-lede { margin-bottom: 1rem; }
 
-/* The bold element: a pumpkin-orange sign with the key facts, topped by a
+/* The bold element: a sun-gold sign with the key facts, topped by a
    destination board showing the next bus (filled by next-bus.js). */
 .bus-sign {
   border-radius: var(--pico-border-radius);
@@ -288,7 +281,7 @@ main { padding-top: 1.25rem; }
   margin: 0;
   padding: 0.55rem 1rem;
   background: #16201b;
-  color: var(--bb-orange);
+  color: var(--bb-sun);
   font-family: var(--bb-heading-font);
   font-weight: 800;
   line-height: 1.3;
@@ -300,7 +293,7 @@ main { padding-top: 1.25rem; }
   height: 0.6em;
   margin-right: 0.5em;
   border-radius: 50%;
-  background: var(--bb-orange);
+  background: var(--bb-sun);
   vertical-align: 0.05em;
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -310,7 +303,7 @@ main { padding-top: 1.25rem; }
 .hero-facts {
   margin: 0;
   padding: 0.5rem 1rem;
-  background: var(--bb-orange);
+  background: var(--bb-sun);
   color: #16201b;
 }
 .hero-facts > div {
@@ -557,14 +550,14 @@ details summary { font-weight: 700; }
 }
 
 .school-card-live {
-  background: var(--bb-orange);
+  background: var(--bb-sun);
   color: #16201b;
   border-left: 8px solid #16201b;
   text-decoration: none;
 }
 .school-card-live h3, .school-card-live p { color: #16201b; }
 .school-card-live .next-bus {
-  color: var(--bb-orange);
+  color: var(--bb-sun);
   margin: 0 0 0.75rem;
   padding: 0.4rem 0.7rem;
   border-radius: 4px;
