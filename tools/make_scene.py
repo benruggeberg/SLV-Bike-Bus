@@ -1,13 +1,20 @@
-"""Generate the header scene (hills, redwoods, sun, route road) in light and dark palettes."""
+"""Generate the header scene (hills, redwoods, a big redwood trunk, sun, route road)
+in light and dark palettes. Colors follow the brand palette: Redwood Green #1B4332,
+Bark Brown #5A3A28, Pumpkin Orange #E07A2F, Redwood Cream #F6EBD7.
+
+Usage: python3 tools/make_scene.py assets/img
+"""
 import random, sys, os
 W, H = 1600, 200
 OUT = sys.argv[1]
 
 PALETTES = {
-    "light": dict(sky="#f7f1dc", sun="#f6c078", back="#b9ccc0", mid="#97afa3", front="#42725f",
-                  trees="#2d5d50", trees_far="#6f9484", road="#f5c400"),
-    "dark":  dict(sky="#2c3b33", sun="#c9955a", back="#3a4d44", mid="#34473e", front="#1d2b24",
-                  trees="#16221c", trees_far="#2c3e35", road="#b89400"),
+    "light": dict(sky="#F6EBD7", sun="#F2A03D", back="#b5d3bf", mid="#7fb596", front="#2d6a4f",
+                  trees="#1B4332", trees_far="#4f8f6f", road="#E07A2F",
+                  trunk="#5A3A28", bark="#8a5a3c", boughs="#1f5a3c"),
+    "dark":  dict(sky="#2a3a31", sun="#b8692a", back="#34493e", mid="#2d4036", front="#1c2b23",
+                  trees="#13201a", trees_far="#26382e", road="#a8581f",
+                  trunk="#3d271b", bark="#553624", boughs="#1a2e24"),
 }
 
 def smooth(points):
@@ -43,7 +50,38 @@ def redwood(x, base, h, rnd):
     pts = [(x, base - h)] + right + [(x + 2.5, base + 2), (x - 2.5, base + 2)] + list(reversed(left))
     return "M" + " L".join(f"{a:.1f},{b:.1f}" for a, b in pts) + " Z"
 
-def build(p):
+def bough(x0, y, length, side, rnd):
+    """A drooping redwood spray: a slightly arched top edge with a jagged,
+    downward-pointing fringe underneath. side=-1 grows left, +1 right."""
+    n = max(4, int(length / 11))
+    step = length / n
+    top = [(x0 + side * step * i, y - 6 * (1 - (i / n - 0.45) ** 2)) for i in range(n + 1)]
+    fringe = []
+    for i in range(n, -1, -1):
+        bx = x0 + side * step * i
+        drop = rnd.uniform(9, 16) * (1 - 0.35 * i / n)
+        fringe += [(bx, y + 3), (bx - side * step / 2, y + 3 + drop)]
+    pts = top + fringe
+    return "M" + " L".join(f"{a:.1f},{b:.1f}" for a, b in pts) + " Z"
+
+def big_redwood(x, base, rnd):
+    """A giant trunk running off the top edge, flared at the base, with bark
+    grooves and drooping foliage sprays on both sides."""
+    top_w, base_w = 44, 70
+    trunk = (f"M{x - top_w/2:.1f},-5 L{x + top_w/2:.1f},-5 "
+             f"C{x + top_w/2 + 2:.1f},{base * 0.6:.1f} {x + base_w/2 - 4:.1f},{base - 20:.1f} {x + base_w/2 + 10:.1f},{base + 6} "
+             f"L{x - base_w/2 - 10:.1f},{base + 6} "
+             f"C{x - base_w/2 + 4:.1f},{base - 20:.1f} {x - top_w/2 - 2:.1f},{base * 0.6:.1f} {x - top_w/2:.1f},-5 Z")
+    grooves = ""
+    for k in (-0.28, 0.02, 0.3):
+        grooves += f"M{x + k * top_w:.1f},2 L{x + k * base_w * 0.9:.1f},{base - 8} "
+    boughs = []
+    for side, y, length in ((-1, 10, 70), (1, 24, 62), (-1, 44, 56), (1, 60, 48), (-1, 78, 38), (1, 92, 30)):
+        edge = x + side * (top_w / 2 - 4)
+        boughs.append(bough(edge, y, length, side, rnd))
+    return trunk, grooves, "".join(boughs)
+
+def build(p, hills_only=False):
     rnd = random.Random(7)
     back = ridge([118, 96, 104, 82, 100, 112, 90, 78, 96, 110, 92, 104, 120])
     mid = ridge([150, 138, 128, 140, 132, 146, 136, 124, 134, 148, 140, 130, 144])
@@ -58,18 +96,27 @@ def build(p):
             x = cluster + k * rnd.uniform(18, 30)
             near_trees.append(redwood(x, 182, rnd.uniform(62, 96), rnd))
     road = smooth([(0, 194), (300, 188), (620, 192), (960, 186), (1280, 191), (1600, 187)])
+    # Sits where phones still see it (they crop to the right-hand ~70%).
+    trunk, grooves, boughs = big_redwood(540, 180, rnd)
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" preserveAspectRatio="xMidYMax slice">
 <rect width="{W}" height="{H}" fill="{p["sky"]}"/>
-<circle cx="1250" cy="92" r="40" fill="{p["sun"]}"/>
+{"" if hills_only else f'<circle cx="1250" cy="92" r="40" fill="{p["sun"]}"/>'}
 <path d="{back}" fill="{p["back"]}"/>
 <path d="{"".join(far_trees)}" fill="{p["trees_far"]}"/>
 <path d="{mid}" fill="{p["mid"]}"/>
 <path d="{"".join(near_trees)}" fill="{p["trees"]}"/>
+{"" if hills_only else f"""<path d="{trunk}" fill="{p["trunk"]}"/>
+<path d="{grooves}" fill="none" stroke="{p["bark"]}" stroke-width="4" stroke-linecap="round"/>
+<path d="{boughs}" fill="{p["boughs"]}"/>"""}
 <path d="{front}" fill="{p["front"]}"/>
 <path d="{road}" fill="none" stroke="{p["road"]}" stroke-width="3" stroke-dasharray="18 12" stroke-linecap="round"/>
 </svg>
 '''
 
+# scene-*.svg: full scene for route pages. scene-hills-*.svg: no sun or big
+# redwood, for the landing page where the family illustration brings its own.
 for name, pal in PALETTES.items():
     with open(os.path.join(OUT, f"scene-{name}.svg"), "w") as f:
         f.write(build(pal))
+    with open(os.path.join(OUT, f"scene-hills-{name}.svg"), "w") as f:
+        f.write(build(pal, hills_only=True))

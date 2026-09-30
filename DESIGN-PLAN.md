@@ -1,9 +1,13 @@
 # Design token plan (approved, applied)
 
-Colors approved by Ben, then matched to the WIP logo (2026-09-30): forest is the
-logo ring `#143e32`, the accent is the logo's "BIKE" red `#b21d10` (replacing redwood),
-and the page background is a warm off-white `#fbf8ee` with the logo's cream `#f7f1dc`
-as the header sky. Tokens live at the top of `assets/css/site.css`.
+Brand palette from Ben's logo work (2026-09-30): Redwood Green `#1B4332` (links,
+buttons, progress line), School Red `#C1121F` (the SLE route, times, cancelled
+banner), Pumpkin Orange `#E07A2F` (the facts sign, next-bus board, info/changed
+banners; only ever a background under dark text), Redwood Cream `#F6EBD7` (header
+sky), Bark Brown `#5A3A28` (footer "forest floor", redwood trunk). The family
+illustration (`assets/img/family-*.webp`) rides over the landing hills, ends the
+/sle/ page in the footer, and fronts the 404. Tokens live at the top of
+`assets/css/site.css`.
 
 ## Idea
 
