@@ -310,6 +310,7 @@ main { padding-top: 1.25rem; }
 
 /* ---------- Steps ---------- */
 .steps li { margin-bottom: 0.6rem; }
+.join-note { font-size: 0.95rem; color: var(--bb-muted); margin-top: -0.25rem; }
 .steps li::marker { font-family: var(--bb-heading-font); font-weight: 800; color: var(--bb-forest); }
 
 /* ---------- Route map ---------- */
