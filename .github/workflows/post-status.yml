@@ -1,5 +1,6 @@
 # Post a day-of notice from a phone: Actions tab -> "Post bike bus notice" -> Run workflow.
-# Writes a valid status.json (date filled in automatically) and redeploys the site.
+# Writes a valid status.json (date filled in automatically) and commits it; the push
+# triggers the normal GitHub Pages deploy.
 # See STATUS-HOWTO.md.
 name: Post bike bus notice
 
@@ -38,7 +39,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
 
 concurrency:
   group: post-status
@@ -104,9 +104,3 @@ jobs:
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
           git commit -m "Notice: $LEVEL ($DAY)" -- status.json
           git push
-
-      - name: Redeploy the site
-        env:
-          GH_TOKEN: ${{ github.token }}
-        # Pushes made by this workflow may not trigger a Pages build on their own.
-        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" --silent || echo "Pages build request failed; the next push will deploy it."
