@@ -55,9 +55,14 @@
   --bb-muted: #56625c;
   --bb-rule: #e2dccb;
   --bb-todo: #8f4f00;
-  /* Map tiles are always light, so the route line uses the light forest in both modes. */
-  --bb-route: #143e32;
+  /* The actual SLE route (map line + stop strip) is drawn in the logo red, so it
+     reads differently from the green page-progress line. Map tiles are always
+     light, so the map uses the light red in both modes. */
+  --bb-route: #b21d10;
+  --bb-line: var(--bb-red);
   --bb-heading-font: "Overpass", system-ui, sans-serif;
+  --bb-track: #dcd6c2;          /* untraveled page-route line */
+  --bb-track-marker: #9fb0a7;   /* untraveled stop outline */
 
   --pico-font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
   --pico-font-size: 112.5%;
@@ -89,6 +94,8 @@
     --bb-ink: #e8eee9;
     --bb-paper: #23302a;
     --bb-sky: #2c3b33;
+    --bb-track: #3a4b42;
+    --bb-track-marker: #5f7469;
     --bb-alert: #ff6b5f;
     --bb-alert-fg: #1a0000;
     --bb-muted: #a9b5ae;
@@ -353,7 +360,7 @@ main { padding-top: 1.25rem; }
   top: 0.35rem;
   bottom: -0.35rem;
   width: var(--line);
-  background: var(--bb-forest);
+  background: var(--bb-line);
 }
 /* stop marker */
 .route-stops li::before {
@@ -366,7 +373,7 @@ main { padding-top: 1.25rem; }
   height: var(--stop);
   border-radius: 50%;
   background: var(--bb-paper);
-  border: 0.3rem solid var(--bb-forest);
+  border: 0.3rem solid var(--bb-line);
   box-sizing: border-box;
 }
 /* terminals: bigger, the school filled in */
@@ -377,7 +384,7 @@ main { padding-top: 1.25rem; }
   width: calc(var(--stop) + 0.4rem);
   height: calc(var(--stop) + 0.4rem);
 }
-.route-stops li:last-child::before { background: var(--bb-forest); }
+.route-stops li:last-child::before { background: var(--bb-line); }
 .route-stops .stop-name {
   display: block;
   font-family: var(--bb-heading-font);
@@ -425,6 +432,27 @@ main { padding-top: 1.25rem; }
     box-sizing: border-box;
   }
   .stop#contact > h2::before { background: var(--bb-forest); }
+
+  /* Scroll progress (progress.js adds .has-progress): the untraveled line is a
+     pale track that fills in green as you scroll; stops fill when reached and
+     the current one grows. */
+  .has-progress .stop::before {
+    opacity: 1;
+    background: linear-gradient(to bottom,
+      var(--bb-forest) calc(var(--fill, 0) * 100%),
+      var(--bb-track) calc(var(--fill, 0) * 100%));
+  }
+  .has-progress .stop#contact::before { background: var(--bb-forest); }
+  .has-progress .stop > h2::before {
+    background: var(--bb-paper);
+    border-color: var(--bb-track-marker);
+    transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+  }
+  .has-progress .stop.reached > h2::before {
+    background: var(--bb-forest);
+    border-color: var(--bb-forest);
+  }
+  .has-progress .stop.current > h2::before { transform: scale(1.5); }
 }
 
 /* ---------- Ride ready ---------- */
