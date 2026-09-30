@@ -4,12 +4,12 @@ Static site for the SLV Bike Bus, a morning group ride to San Lorenzo Valley Ele
 Plain HTML/CSS/JS, no build step. Hosted on GitHub Pages from `main` (repo root).
 
 - **Posting a rain/cancel notice:** see [STATUS-HOWTO.md](STATUS-HOWTO.md).
-- **Design proposal:** see [DESIGN-PLAN.md](DESIGN-PLAN.md) (awaiting review).
+- **Design tokens:** see [DESIGN-PLAN.md](DESIGN-PLAN.md).
 
 ## Layout
 
 ```
-/                          Landing page, list of routes
+/                          Landing page, one card per school (only SLE is live)
 /sle/                      SLE Bike Bus page (flyer QR codes point here; never change this URL)
 /sle/disclaimer/           Full disclaimer
 /status.json               Day-of banner data
@@ -47,7 +47,7 @@ appear is tagged `data-season="…"`. Also check the landing page's route summar
 2. Add `data/route-ms.geojson` and point the map's `data-geojson` at it.
 3. Add a `"ms"` key to `status.json`, add `ms` to `ROUTE_NAMES` in `assets/js/status.js`,
    and add it to the landing page's banner (`data-routes="sle,ms"`,
-   `data-route-links="sle=sle/,ms=ms/"`) and route list.
+   `data-route-links="sle=sle/,ms=ms/"`). Turn that school's card into a live link.
 4. With two or more routes, consider moving the shared header/footer into Jekyll includes.
 
 ## Open items: TODO(Ben)
@@ -57,18 +57,20 @@ Search the repo for `TODO(Ben)` to find each one in place.
 - [ ] Text-update service and join code: `sle/index.html`, "text-signup block" in How to join
 - [ ] Logo: hero placeholder in `sle/index.html`; also `og:image` on `/` and `/sle/`
 - [ ] Contact email: `sle/index.html` #contact
+- [ ] "I can help lead" link on the Middle and High School cards: `index.html`
 - [ ] Disclaimer wording, reviewed (check school/district language): `sle/disclaimer/index.html`
 - [ ] Rain policy: FAQ
 - [ ] Confirm "running late" answer: FAQ
 - [ ] What helping lead involves: FAQ
-- [ ] Can non-e-bikes ride: "Who can ride"
+- [ ] Can non-e-bikes ride: #ready, "Who can ride"
 - [ ] First-ride risk acknowledgment: commented-out slot in How to join
 - [ ] Photo policy: footer
-- [ ] Safety tips review: #safety
-- [ ] Ride-leader safety handout link: #safety
+- [ ] Safety tips review: #ready, "On the ride"
+- [ ] Ride-leader safety handout link: #ready
 - [ ] Partner "Thanks to" line (only with permission): commented out in #contact
 - [ ] Bell time: season comment in `sle/index.html` (not displayed yet)
-- [ ] Design token plan review: `DESIGN-PLAN.md`
-- [ ] Custom domain: add `CNAME` containing `slvbikebus.org`, set DNS, enforce HTTPS
+- [ ] Custom domain: `CNAME` file is in place; set Porkbun DNS, verify the domain in GitHub, enforce HTTPS
+- [ ] Favicon from the logo (all pages)
+- [ ] Check the traced line between Fall Creek Dr and SLV High: it runs just west of Hwy 9, not on it
 
 Done: route line traced from `SLV_Bike_Bus_Route.gpx` (about 1.04 miles).

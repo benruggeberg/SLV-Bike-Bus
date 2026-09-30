@@ -39,10 +39,34 @@
     </section>
 
     <section aria-labelledby="routes-title">
-      <h2 id="routes-title">Routes</h2>
-      <ul class="route-index">
+      <h2 id="routes-title">Pick your school</h2>
+      <ul class="school-cards">
         <li>
-          <a href="sle/"><strong>SLE Bike Bus</strong></a>: to San Lorenzo Valley Elementary. Leaves 8:00am from Cooper St &amp; Farmer St, every school day in October.
+          <a class="school-card school-card-live" href="sle/">
+            <h3>SLV Elementary</h3>
+            <p class="card-status">Rolling now</p>
+            <p>Leaves 8:00am from Cooper St &amp; Farmer St. Every school day in October.</p>
+            <span class="card-go">Route and how to join</span>
+          </a>
+        </li>
+        <!-- Placeholder schools. When a route starts, copy sle/ to ms/ or hs/ and
+             turn the card into a link like the SLV Elementary one.
+             CTA idea once there's an email: <a href="mailto:ADDRESS?subject=Middle%20school%20bike%20bus">I can help lead</a> -->
+        <li>
+          <div class="school-card school-card-soon">
+            <h3>SLV Middle School</h3>
+            <p class="card-status">No bike bus yet</p>
+            <p>Want one? It starts with one parent willing to lead the ride. We'll help you plan a route.</p>
+            <p class="card-cta"><span class="todo">TODO(Ben): "I can help lead" contact link.</span></p>
+          </div>
+        </li>
+        <li>
+          <div class="school-card school-card-soon">
+            <h3>SLV High School</h3>
+            <p class="card-status">No bike bus yet</p>
+            <p>Want one? It starts with one parent willing to lead the ride. We'll help you plan a route.</p>
+            <p class="card-cta"><span class="todo">TODO(Ben): "I can help lead" contact link.</span></p>
+          </div>
         </li>
       </ul>
     </section>

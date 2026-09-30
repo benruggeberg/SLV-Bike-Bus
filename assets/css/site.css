@@ -1,35 +1,131 @@
 /*
  * SLV Bike Bus site styles, layered on Pico CSS 2.1.1.
- *
- * STATUS: functional styles only. Brand colors and typefaces are pending
- * Ben's review of the token plan (see DESIGN-PLAN.md). When approved, set
- * the tokens below and the @font-face rules; components already use them.
+ * Tokens follow DESIGN-PLAN.md. Revisit the colors once the logo exists.
  */
 
-/* ---------- Tokens (placeholders until the design review) ---------- */
-:root {
-  --bb-cancelled-bg: #b3261e;
-  --bb-cancelled-fg: #ffffff;
-  --bb-changed-bg: #f2c200;
-  --bb-changed-fg: #1a1a1a;
-  --bb-info-bg: #1f5f99;
-  --bb-info-fg: #ffffff;
-  --bb-route: #1f7a4d;
+/* ---------- Fonts (self-hosted, SIL OFL) ---------- */
+@font-face {
+  font-family: "Overpass";
+  src: url("../fonts/overpass-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Overpass";
+  src: url("../fonts/overpass-latin-800-normal.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("../fonts/atkinson-hyperlegible-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("../fonts/atkinson-hyperlegible-latin-700-normal.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src: url("../fonts/atkinson-hyperlegible-latin-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ---------- Tokens ----------
+ * Selectors match Pico's own theme selectors (0,2,0) so these win by load order.
+ */
+:root:not([data-theme]) {
+  --bb-forest: #1f4d35;
+  --bb-redwood: #8a3b23;
+  --bb-bus: #f5c400;
+  --bb-ink: #16201b;
+  --bb-paper: #ffffff;
+  --bb-alert: #b3261e;
+  --bb-alert-fg: #ffffff;
+  --bb-muted: #5a6660;
+  --bb-rule: #d7ddd9;
   --bb-todo: #8f4f00;
+  /* Map tiles are always light, so the route line uses the light forest in both modes. */
+  --bb-route: #1f4d35;
+  --bb-heading-font: "Overpass", system-ui, sans-serif;
+
+  --pico-font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --pico-font-size: 112.5%;
+  --pico-line-height: 1.55;
+  --pico-border-radius: 6px;
+  --pico-background-color: var(--bb-paper);
+  --pico-color: var(--bb-ink);
+  --pico-h1-color: var(--bb-ink);
+  --pico-h2-color: var(--bb-ink);
+  --pico-h3-color: var(--bb-ink);
+  --pico-muted-color: var(--bb-muted);
+  --pico-muted-border-color: var(--bb-rule);
+  --pico-primary: var(--bb-forest);
+  --pico-primary-background: var(--bb-forest);
+  --pico-primary-border: var(--bb-forest);
+  --pico-primary-underline: rgba(31, 77, 53, 0.5);
+  --pico-primary-hover: #143524;
+  --pico-primary-hover-background: #143524;
+  --pico-primary-hover-border: #143524;
+  --pico-primary-hover-underline: #143524;
+  --pico-primary-focus: rgba(31, 77, 53, 0.35);
+  --pico-primary-inverse: #ffffff;
+  --pico-text-selection-color: rgba(245, 196, 0, 0.45);
 }
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bb-cancelled-bg: #ff6b5f;
-    --bb-cancelled-fg: #1a0000;
-    --bb-info-bg: #8cc4ff;
-    --bb-info-fg: #04192d;
-    --bb-route: #5fd49a;
+  :root:not([data-theme]) {
+    --bb-forest: #7fcf9f;
+    --bb-redwood: #e79a7c;
+    --bb-ink: #e8eee9;
+    --bb-paper: #111714;
+    --bb-alert: #ff6b5f;
+    --bb-alert-fg: #1a0000;
+    --bb-muted: #a9b5ae;
+    --bb-rule: #2c3a33;
     --bb-todo: #ffb74d;
+
+    --pico-primary-underline: rgba(127, 207, 159, 0.5);
+    --pico-primary-hover: #a6e2bd;
+    --pico-primary-hover-background: #a6e2bd;
+    --pico-primary-hover-border: #a6e2bd;
+    --pico-primary-hover-underline: #a6e2bd;
+    --pico-primary-focus: rgba(127, 207, 159, 0.4);
+    --pico-primary-inverse: #111714;
+    --pico-card-sectioning-background-color: #18211c;
   }
+}
+@media (min-width: 1024px) {
+  :root:not([data-theme]) { --pico-font-size: 118.75%; }
 }
 
 /* ---------- Basics ---------- */
 html { overflow-x: hidden; }
+body { background: var(--bb-paper); }
+
+h1, h2, h3, .site-name {
+  font-family: var(--bb-heading-font);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+h1 { font-size: 2.1rem; line-height: 1.1; }
+h2 { font-size: 1.6rem; line-height: 1.15; margin-bottom: 0.75rem; }
+h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+
+main > section + section { margin-top: 2.5rem; }
+
+:focus-visible {
+  outline: 3px solid var(--bb-bus);
+  outline-offset: 2px;
+}
 
 .skip-link {
   position: absolute;
@@ -37,7 +133,7 @@ html { overflow-x: hidden; }
   top: -3rem;
   z-index: 1000;
   padding: 0.5rem 1rem;
-  background: var(--pico-background-color);
+  background: var(--bb-paper);
   color: var(--pico-primary);
 }
 .skip-link:focus { top: 0.5rem; }
@@ -55,14 +151,15 @@ section[id] { scroll-margin-top: 1rem; }
 
 /* ---------- Header ---------- */
 .site-header nav { flex-wrap: wrap; }
-.site-name { font-weight: 700; }
+.site-name { font-size: 1.15rem; color: var(--bb-ink); text-decoration: none; }
 .section-nav { flex-wrap: wrap; }
 .section-nav li { padding-block: 0.25rem; }
 @media (max-width: 575px) {
   .site-header nav { flex-direction: column; align-items: flex-start; }
   .site-header nav ul { margin-inline: 0; }
   .site-header nav ul:first-child li { padding-bottom: 0; padding-inline-start: 0; }
-  .section-nav li { padding-inline: 0 0.9rem; }
+  .section-nav { --pico-nav-link-spacing-horizontal: 0; }
+  .section-nav li { padding-inline: 0 0.8rem; }
   .section-nav a { font-size: 0.95rem; }
 }
 
@@ -75,25 +172,25 @@ section[id] { scroll-margin-top: 1rem; }
   text-align: center;
 }
 .status-item a { color: inherit; text-decoration: underline; }
+.status-label { font-family: var(--bb-heading-font); }
 .status-cancelled {
-  background: var(--bb-cancelled-bg);
-  color: var(--bb-cancelled-fg);
+  background: var(--bb-alert);
+  color: var(--bb-alert-fg);
   font-size: 1.25rem;
   font-weight: 700;
   padding-block: 1.1rem;
 }
-.status-changed { background: var(--bb-changed-bg); color: var(--bb-changed-fg); }
-.status-info    { background: var(--bb-info-bg);    color: var(--bb-info-fg); }
-.status-label { text-transform: none; }
+.status-changed { background: var(--bb-bus); color: #16201b; }
+.status-info    { background: #1f4d35; color: #ffffff; }
 
 /* ---------- Hero ---------- */
-.hero { padding-block: 0.5rem 1.5rem; }
-.hero-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+.hero { padding-block: 0.25rem 0; }
+.hero-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.6rem; }
 .hero-top h1 { margin: 0; }
 .logo-placeholder {
   flex: none;
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   display: grid;
   place-items: center;
   text-align: center;
@@ -103,33 +200,49 @@ section[id] { scroll-margin-top: 1rem; }
   color: var(--bb-todo);
   border-radius: 8px;
 }
-.hero-lede { margin-bottom: 0.75rem; }
-.hero-facts { margin: 0 0 1.25rem; }
+.hero-lede { margin-bottom: 1rem; }
+
+/* The one bold element: a school-bus-yellow sign with the key facts. */
+.hero-facts {
+  margin: 0;
+  padding: 0.5rem 1rem;
+  background: var(--bb-bus);
+  color: #16201b;
+  border-radius: var(--pico-border-radius);
+  border-left: 8px solid #16201b;
+}
 .hero-facts > div {
   display: grid;
-  grid-template-columns: 5.5rem 1fr;
+  grid-template-columns: 5rem 1fr;
   gap: 0.5rem;
-  padding-block: 0.4rem;
-  border-bottom: 1px solid var(--pico-muted-border-color);
+  padding-block: 0.5rem;
 }
-.hero-facts dt { font-weight: 700; margin: 0; }
-.hero-facts dd { margin: 0; }
+.hero-facts > div + div { border-top: 1px solid rgba(22, 32, 27, 0.25); }
+.hero-facts dt {
+  margin: 0;
+  font-family: var(--bb-heading-font);
+  font-weight: 700;
+}
+.hero-facts dd { margin: 0; color: #16201b; }
+.hero-facts strong { font-family: var(--bb-heading-font); font-weight: 800; color: #16201b; }
 
 /* ---------- Steps ---------- */
 .steps li { margin-bottom: 0.6rem; }
+.steps li::marker { font-family: var(--bb-heading-font); font-weight: 800; color: var(--bb-forest); }
 
 /* ---------- Route map ---------- */
-.route-map-figure { margin-bottom: 1.25rem; }
+.route-map-figure { margin-bottom: 1.5rem; }
 .route-map {
   position: relative;
   height: 340px;
   border-radius: var(--pico-border-radius);
   background: var(--pico-card-sectioning-background-color);
+  border: 1px solid var(--bb-rule);
   overflow: hidden;
 }
 .route-map-fallback { padding: 1rem; margin: 0; }
-.route-map-figure figcaption { font-size: 0.9rem; padding-top: 0.4rem; }
-.route-tooltip { font-weight: 700; }
+.route-map-figure figcaption { font-size: 0.9rem; padding-top: 0.4rem; color: var(--bb-muted); }
+.route-tooltip { font-family: var(--bb-heading-font); font-weight: 700; }
 .map-unlock {
   position: absolute;
   z-index: 1000;
@@ -158,11 +271,149 @@ section[id] { scroll-margin-top: 1rem; }
 }
 .route-map .leaflet-bar a:last-child { border-bottom: 0; }
 
-/* ---------- Route list (transit-line treatment comes with the design pass) ---------- */
-.route-stops li { margin-bottom: 0.6rem; }
-.route-stops .stop-time { display: block; font-weight: 700; }
+/* ---------- Route list: transit-line strip ----------
+ * Stays an <ol> for screen readers; the numbers are drawn as stop markers.
+ */
+.route-stops {
+  --stop: 1.25rem;       /* marker diameter */
+  --line: 0.5rem;        /* line thickness */
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+.route-stops li {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 1.4rem 2.5rem;
+  min-height: 3rem;
+}
+.route-stops li:last-child { padding-bottom: 0; min-height: 0; }
+/* line segment down to the next stop */
+.route-stops li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: calc((var(--stop) - var(--line)) / 2 + 0.1rem);
+  top: 0.35rem;
+  bottom: -0.35rem;
+  width: var(--line);
+  background: var(--bb-forest);
+}
+/* stop marker */
+.route-stops li::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 0.1rem;
+  top: 0.2rem;
+  width: var(--stop);
+  height: var(--stop);
+  border-radius: 50%;
+  background: var(--bb-paper);
+  border: 0.3rem solid var(--bb-forest);
+  box-sizing: border-box;
+}
+/* terminals: bigger, the school filled in */
+.route-stops li:first-child::before,
+.route-stops li:last-child::before {
+  left: -0.1rem;
+  top: 0;
+  width: calc(var(--stop) + 0.4rem);
+  height: calc(var(--stop) + 0.4rem);
+}
+.route-stops li:last-child::before { background: var(--bb-forest); }
+.route-stops .stop-name {
+  display: block;
+  font-family: var(--bb-heading-font);
+  font-weight: 700;
+  line-height: 1.3;
+}
+.route-stops .stop-time {
+  display: block;
+  font-family: var(--bb-heading-font);
+  font-weight: 800;
+  color: var(--bb-redwood);
+}
 
-.note { font-size: 0.95rem; }
+.note { font-size: 0.95rem; color: var(--bb-muted); }
+
+/* ---------- Ride ready ---------- */
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  list-style: none;
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 0.5rem;
+}
+.checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid var(--bb-forest);
+  border-radius: 3px;
+}
+.tips li { margin-bottom: 0.5rem; }
+
+/* ---------- FAQ ---------- */
+details summary { font-weight: 700; }
+
+/* ---------- Landing: school cards ----------
+ * Deliberately not identical: the live route is a solid sign; the others are
+ * dashed "coming soon" outlines asking for a leader.
+ */
+.school-cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .school-cards { grid-template-columns: repeat(3, 1fr); }
+}
+.school-cards > li { list-style: none; margin: 0; display: flex; }
+.school-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 1.1rem 1.25rem;
+  border-radius: var(--pico-border-radius);
+}
+.school-card h3 { margin: 0 0 0.4rem; font-size: 1.3rem; }
+.school-card p { margin: 0 0 0.6rem; }
+.school-card .card-status {
+  font-family: var(--bb-heading-font);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.school-card-live {
+  background: var(--bb-bus);
+  color: #16201b;
+  border-left: 8px solid #16201b;
+  text-decoration: none;
+}
+.school-card-live h3, .school-card-live p { color: #16201b; }
+.school-card-live .card-go {
+  margin-top: auto;
+  font-family: var(--bb-heading-font);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.school-card-live:hover .card-go { text-decoration-thickness: 3px; }
+.school-card-live:focus-visible { outline-color: var(--bb-forest); outline-offset: 3px; }
+
+.school-card-soon {
+  border: 2px dashed var(--bb-rule);
+  color: var(--bb-ink);
+}
+.school-card-soon .card-status { color: var(--bb-muted); }
+.school-card-soon .card-cta { margin-top: auto; }
 
 /* ---------- TODO markers (remove the class once content is final) ---------- */
 .todo {
@@ -172,12 +423,15 @@ section[id] { scroll-margin-top: 1rem; }
   color: var(--bb-todo);
   font-size: 0.9rem;
   border-radius: 4px;
+  overflow-wrap: anywhere;
 }
 p.todo { margin-block: 0.5rem 1rem; }
 
 /* ---------- Footer ---------- */
 .site-footer {
+  margin-top: 3rem;
   font-size: 0.9rem;
-  border-top: 1px solid var(--pico-muted-border-color);
+  color: var(--bb-muted);
+  border-top: 1px solid var(--bb-rule);
   padding-block: 1.5rem 2.5rem;
 }

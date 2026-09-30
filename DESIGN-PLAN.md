@@ -1,8 +1,7 @@
-# Design token plan (proposal, awaiting Ben's review)
+# Design token plan (approved, applied)
 
-Nothing here is applied yet. The site currently uses Pico defaults plus functional
-placeholder colors in `assets/css/site.css`. Once approved, the tokens go into
-`:root` in that file. Colors will be revisited when the logo exists.
+Colors approved by Ben. Tokens live at the top of `assets/css/site.css`.
+Revisit the colors once the logo exists.
 
 ## Idea
 
