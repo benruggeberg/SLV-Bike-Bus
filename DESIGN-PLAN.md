@@ -5,8 +5,8 @@ buttons, progress line), School Red `#C1121F` (the SLE route, times, cancelled
 banner), Sun Gold `#FDB43C`, a slightly yellower take on the illustration's sun (the facts sign, next-bus board, info/changed
 banners; only ever a background under dark text), Redwood Cream `#F6EBD7` (header
 sky), Bark Brown `#5A3A28` (footer "forest floor", redwood trunk). The family
-illustration (`assets/img/family-*.webp`) rides over the landing hills, ends the
-/sle/ page in the footer, and fronts the 404. Tokens live at the top of
+illustration (`assets/img/family-*.webp`) ends the /sle/ page in the footer and
+fronts the 404; the landing page keeps the circle logo in the landscape. Tokens live at the top of
 `assets/css/site.css`.
 
 ## Idea

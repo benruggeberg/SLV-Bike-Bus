@@ -113,10 +113,8 @@ def build(p, hills_only=False):
 </svg>
 '''
 
-# scene-*.svg: full scene for route pages. scene-hills-*.svg: no sun or big
-# redwood, for the landing page where the family illustration brings its own.
+# hills_only=True drops the sun and big redwood (e.g. behind an illustration that
+# brings its own); not used on the site right now.
 for name, pal in PALETTES.items():
     with open(os.path.join(OUT, f"scene-{name}.svg"), "w") as f:
         f.write(build(pal))
-    with open(os.path.join(OUT, f"scene-hills-{name}.svg"), "w") as f:
-        f.write(build(pal, hills_only=True))

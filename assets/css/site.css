@@ -215,15 +215,16 @@ section[id] { scroll-margin-top: 1rem; }
   .section-nav a { font-size: 0.95rem; }
 }
 
+/* Landing: the big logo stands in the landscape */
+.scene-landing .site-header { display: flex; justify-content: center; padding-top: 1.25rem; }
+.logo-landing { position: relative; z-index: 1; width: 160px; height: 160px; margin-bottom: -48px; }
+@media (min-width: 768px) { .logo-landing { width: 200px; height: 200px; margin-bottom: -70px; } }
+
 /* ---------- The family illustration ----------
  * Transparent WebP with a white sticker outline, so it works on cream and on
- * dark green. Landing: rides over the header hills. /sle/: the end of the route,
- * in the footer. 404: "wrong turn".
+ * dark green. /sle/: the end of the route, in the footer. 404: "wrong turn".
  */
 .family { display: block; height: auto; margin-inline: auto; }
-/* The family's sandy path lands on the hills: overlap most of the scene strip. */
-.landing-art { position: relative; z-index: 1; text-align: center; margin-bottom: calc(var(--scene-h) * -0.72); }
-.family-landing { width: min(86vw, 460px); }
 .family-404 { width: min(80vw, 380px); margin: 0.5rem auto 1.25rem; }
 
 /* ---------- Status banner ---------- */
