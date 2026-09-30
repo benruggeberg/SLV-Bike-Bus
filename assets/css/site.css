@@ -238,8 +238,19 @@ section[id] { scroll-margin-top: 1rem; }
   border-bottom: 5px solid rgba(0, 0, 0, 0.35);
 }
 .status-icon { width: 1.6em; height: 1.6em; flex: none; }
-.status-changed { background: var(--bb-bus); color: #16201b; }
-.status-info    { background: #143e32; color: #ffffff; }
+/* Info: plain school-bus yellow. Changed: the same yellow with black hazard
+   stripes top and bottom, like a construction sign. */
+.status-info { background: var(--bb-bus); color: #16201b; font-weight: 700; }
+.status-changed {
+  --stripes: repeating-linear-gradient(-45deg, #16201b 0 10px, var(--bb-bus) 10px 20px);
+  background:
+    var(--stripes) top / 100% 8px no-repeat,
+    var(--stripes) bottom / 100% 8px no-repeat,
+    var(--bb-bus);
+  color: #16201b;
+  font-weight: 700;
+  padding-block: 1.25rem;
+}
 
 /* ---------- Hero ---------- */
 main { padding-top: 1.25rem; }

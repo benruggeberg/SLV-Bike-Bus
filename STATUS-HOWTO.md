@@ -19,8 +19,8 @@ redeploys the site. No typing JSON, so a typo can't break the banner.
 **Each time:**
 1. Tap the **Bike bus notice** icon.
 2. Tap **Run workflow**. A small form opens.
-3. Pick the **Type of notice**: `cancelled` (red), `changed` (yellow), `info` (green),
-   or `clear` (takes today's notice down).
+3. Pick the **Type of notice**: `cancelled` (red), `changed` (yellow with hazard
+   stripes), `info` (yellow), or `clear` (takes today's notice down).
 4. Type the **message**, e.g. "No bike bus today because of rain. See you tomorrow."
 5. Pick **today**, or **tomorrow** if you're posting the night before.
 6. Tap the green **Run workflow** button.
@@ -58,7 +58,7 @@ Keep the quotes and commas exactly as shown. Only change the text inside the quo
 }
 ```
 
-### Changed (yellow banner)
+### Changed (yellow banner with hazard stripes)
 
 ```json
 {
@@ -70,7 +70,7 @@ Keep the quotes and commas exactly as shown. Only change the text inside the quo
 }
 ```
 
-### Info (green banner)
+### Info (yellow banner)
 
 ```json
 {
