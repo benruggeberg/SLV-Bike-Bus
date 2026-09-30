@@ -54,23 +54,18 @@ appear is tagged `data-season="…"`. Also check the landing page's route summar
 
 Search the repo for `TODO(Ben)` to find each one in place.
 
-- [ ] Text-update service and join code: `sle/index.html`, "text-signup block" in How to join
-- [ ] Logo: hero placeholder in `sle/index.html`; also `og:image` on `/` and `/sle/`
-- [ ] Contact email: `sle/index.html` #contact
-- [ ] "I can help lead" link on the Middle and High School cards: `index.html`
+- [ ] Final logo: replace `assets/img/logo-wip.webp`, `favicon-48.png`, `apple-touch-icon.png`, `og-image.jpg` (currently cut from the WIP circle)
 - [ ] Disclaimer wording, reviewed (check school/district language): `sle/disclaimer/index.html`
-- [ ] Rain policy: FAQ
 - [ ] Confirm "running late" answer: FAQ
-- [ ] What helping lead involves: FAQ
-- [ ] Can non-e-bikes ride: #ready, "Who can ride"
-- [ ] First-ride risk acknowledgment: commented-out slot in How to join
-- [ ] Photo policy: footer
 - [ ] Safety tips review: #ready, "On the ride"
-- [ ] Ride-leader safety handout link: #ready
 - [ ] Partner "Thanks to" line (only with permission): commented out in #contact
 - [ ] Bell time: season comment in `sle/index.html` (not displayed yet)
-- [ ] Custom domain: `CNAME` file is in place; set Porkbun DNS, verify the domain in GitHub, enforce HTTPS
-- [ ] Favicon from the logo (all pages)
-- [ ] Check the traced line between Fall Creek Dr and SLV High: it runs just west of Hwy 9, not on it
 
-Done: route line traced from `SLV_Bike_Bus_Route.gpx` (about 1.04 miles).
+Decided / done:
+- Route line traced from `SLV_Bike_Bus_Route.gpx` (about 1.04 miles); good enough for now.
+- No text-update service for now (small group). Template left in a comment in How to join.
+- No first-ride sign-in.
+- Rain policy: rain or shine, cancel only when unsafe, "no notice means we're riding."
+- Contact: hello@slvbikebus.org (Porkbun email forwarding).
+- Any bike can ride; no need to say so. No handouts or photo policy for now.
+- Custom domain live with HTTPS enforced (Porkbun DNS: 4 GitHub A records + www CNAME; domain verified).

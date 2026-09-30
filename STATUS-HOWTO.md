@@ -13,7 +13,8 @@ It only shows on the date you put in the file, in California time. Tomorrow it d
 6. Tap **Commit changes** (or **Save**), then **Commit** directly to `main`.
 7. Wait 1–3 minutes, then open the site and pull to refresh. GitHub Pages takes a moment to update.
 
-Send the same message by text too. Many parents won't check the site.
+The site promises "no notice means we're riding," so post cancellations by 7:30am.
+If you have a group chat with the riding families, post there too.
 
 ## Copy-paste examples
 

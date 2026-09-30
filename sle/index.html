@@ -23,14 +23,18 @@
   <title>SLE Bike Bus: ride to San Lorenzo Valley Elementary</title>
   <meta name="description" content="A free group bike ride to SLV Elementary. Leaves 8:00am from Cooper St &amp; Farmer St every school day in October. Here's how to join.">
   <meta name="color-scheme" content="light dark">
-  <link rel="icon" href="data:,"><!-- TODO(Ben): favicon from the logo -->
+  <link rel="icon" type="image/png" href="../assets/img/favicon-48.png">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="SLV Bike Bus">
   <meta property="og:title" content="SLE Bike Bus">
   <meta property="og:description" content="Ride to SLV Elementary together. Leaves 8:00am from Cooper &amp; Farmer every school day in October.">
   <meta property="og:url" content="https://slvbikebus.org/sle/">
-  <!-- TODO(Ben): add og:image (1200×630 PNG of the logo) once the logo exists. -->
+  <meta property="og:image" content="https://slvbikebus.org/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="SLV Bike Bus logo: a mountain lion riding a cargo bike with two cubs">
 
   <link rel="stylesheet" href="../assets/vendor/pico/pico.min.css">
   <link rel="stylesheet" href="../assets/css/site.css">
@@ -63,8 +67,8 @@
     <!-- 5.1 Hero -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-top">
-        <!-- TODO(Ben): replace with <img src="../assets/img/logo.svg" alt="SLE Bike Bus logo" width="64" height="64"> -->
-        <div class="logo-placeholder" role="img" aria-label="Logo coming soon">Logo<br>TODO</div>
+        <!-- Work-in-progress logo. Replace assets/img/logo-wip.webp (and the icons/og-image) when final. -->
+        <img class="logo" src="../assets/img/logo-wip.webp" alt="SLV Bike Bus logo" width="96" height="96">
         <h1 id="hero-title">SLE Bike Bus</h1>
       </div>
       <p class="hero-lede">A group bike ride to San Lorenzo Valley Elementary. Grown-ups ride, kids ride along.</p>
@@ -94,13 +98,9 @@
         <li>
           Join the <a href="https://www.lovetoride.net/santacruz/groups/6536">SLE Bike Bus group</a> on Love to Ride.
         </li>
-        <!-- BEGIN text-signup block — swap this whole <li> once the text service is chosen.
-             Example for Remind: Text <strong>@CODE</strong> to <strong>81010</strong> to get morning updates. -->
-        <li>
-          Sign up for morning text updates.
-          <span class="todo">TODO(Ben): text service and join code (e.g. "Text @CODE to 81010").</span>
-        </li>
-        <!-- END text-signup block -->
+        <!-- Text updates are skipped for now. If the group grows, add a step here, e.g.
+        <li>Get morning updates: text <strong>@CODE</strong> to <strong>81010</strong>.</li>
+        and mention texts in the rain FAQ below. -->
         <li>
           Show up at <span data-season="startPlace">Cooper St &amp; Farmer St</span> by <span data-season="departTime">8:00am</span> with your kids and your bike.
         </li>
@@ -108,9 +108,6 @@
           Log your bike bus rides on Love to Ride for Biketober.
         </li>
       </ol>
-      <!-- TODO(Ben): first-ride risk acknowledgment, not decided yet. Uncomment and edit when it is:
-      <p>On your first ride, please sign the sign-in sheet with the ride leader at the start.</p>
-      -->
     </section>
 
     <!-- 5.3 Route and schedule -->
@@ -155,7 +152,6 @@
 
       <h3>Who can ride</h3>
       <p>Adults ride. Kids ride as passengers on cargo bikes or in trailers pulled by bikes. Each adult brings their own kids.</p>
-      <p class="todo">TODO(Ben): can people ride regular (non-electric) bikes too? Say so here.</p>
 
       <h3>Before you leave home</h3>
       <ul class="checklist">
@@ -178,7 +174,6 @@
         <li>Slow down and yield to people walking on the Fall Creek bridge and in the high school lot.</li>
         <li>Wear bright or reflective clothing, and run your lights even in daylight.</li>
       </ul>
-      <p class="todo">TODO(Ben): link to the ride-leader safety handout.</p>
     </section>
 
     <!-- 5.6 FAQ -->
@@ -195,8 +190,9 @@
       </details>
       <details>
         <summary>What happens if it rains?</summary>
-        <p>Check the notice at the top of this page and your texts by 7:30am.</p>
-        <p class="todo">TODO(Ben): rain policy.</p>
+        <p>We ride rain or shine. Light rain is part of the adventure: bring rain gear for you and a cover or poncho for the kids.</p>
+        <p>We cancel when riding isn't safe: heavy rain, strong wind, lightning, wildfire smoke, or road trouble like flooding or trees down on Hwy 9. If we cancel, a notice goes up at the top of this page by 7:30am. <strong>No notice means we're riding.</strong></p>
+        <p>And it's always your call to skip a day.</p>
       </details>
       <details>
         <summary>Does it cost anything?</summary>
@@ -212,15 +208,14 @@
       </details>
       <details>
         <summary>How do I help lead?</summary>
-        <p>Get in touch. See <a href="#contact">Contact</a>.</p>
-        <p class="todo">TODO(Ben): what helping lead involves.</p>
+        <p>Email <a href="mailto:hello@slvbikebus.org">hello@slvbikebus.org</a> and we'll tell you what's involved.</p>
       </details>
     </section>
 
     <!-- 5.7 Contact -->
     <section id="contact" aria-labelledby="contact-title">
       <h2 id="contact-title">Contact</h2>
-      <p class="todo">TODO(Ben): contact email.</p>
+      <p>Questions or ideas? Email <a href="mailto:hello@slvbikebus.org">hello@slvbikebus.org</a>.</p>
       <p>Join the conversation in the <a href="https://www.lovetoride.net/santacruz/groups/6536">SLE Bike Bus group on Love to Ride</a>.</p>
       <!-- TODO(Ben): "Thanks to" line. List only organizations that have given permission.
       <p>Thanks to …</p>
@@ -235,7 +230,7 @@
       Riding is voluntary and at your own risk. Each adult is responsible for their own bike, equipment, and children.
       <a href="disclaimer/">Read the full disclaimer</a>.
     </p>
-    <p>We don't publish children's names. <span class="todo">TODO(Ben): photo policy.</span></p>
+    <p>We don't publish children's names.</p>
   </footer>
 </body>
 </html>

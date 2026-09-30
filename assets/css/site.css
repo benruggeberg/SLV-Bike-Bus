@@ -113,8 +113,9 @@
  * Route pages read as one column; the landing page is wider for its cards.
  */
 @media (min-width: 768px) {
-  .page-narrow .container { max-width: 46rem; }
-  .page-landing .container { max-width: 68rem; }
+  /* min() keeps a side gutter when the cap is wider than the viewport */
+  .page-narrow .container { max-width: min(46rem, calc(100% - 3rem)); }
+  .page-landing .container { max-width: min(68rem, calc(100% - 3rem)); }
   .hero-facts { max-width: 34rem; }
 }
 
@@ -198,19 +199,10 @@ section[id] { scroll-margin-top: 1rem; }
 .hero { padding-block: 0.25rem 0; }
 .hero-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.6rem; }
 .hero-top h1 { margin: 0; }
-.logo-placeholder {
-  flex: none;
-  width: 64px;
-  height: 64px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  font-size: 0.7rem;
-  line-height: 1.1;
-  border: 2px dashed var(--bb-todo);
-  color: var(--bb-todo);
-  border-radius: 8px;
-}
+@media (max-width: 575px) { .hero-top h1 { font-size: 1.85rem; } }
+.logo { flex: none; display: block; width: 76px; height: 76px; }
+@media (min-width: 576px) { .logo { width: 96px; height: 96px; } }
+.logo-landing { width: 180px; height: 180px; margin-bottom: 1rem; }
 .hero-lede { margin-bottom: 1rem; }
 
 /* The one bold element: a school-bus-yellow sign with the key facts. */
