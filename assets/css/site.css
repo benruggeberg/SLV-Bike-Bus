@@ -86,11 +86,11 @@
     --bb-forest: #7fcf9f;
     --bb-redwood: #e79a7c;
     --bb-ink: #e8eee9;
-    --bb-paper: #111714;
+    --bb-paper: #23302a;
     --bb-alert: #ff6b5f;
     --bb-alert-fg: #1a0000;
     --bb-muted: #a9b5ae;
-    --bb-rule: #2c3a33;
+    --bb-rule: #3d4f45;
     --bb-todo: #ffb74d;
 
     --pico-primary-underline: rgba(127, 207, 159, 0.5);
@@ -100,11 +100,22 @@
     --pico-primary-hover-underline: #a6e2bd;
     --pico-primary-focus: rgba(127, 207, 159, 0.4);
     --pico-primary-inverse: #111714;
-    --pico-card-sectioning-background-color: #18211c;
+    --pico-card-sectioning-background-color: #2c3b33;
+    --pico-form-element-background-color: #2c3b33;
+    --pico-form-element-border-color: #6f8479;
   }
 }
 @media (min-width: 1024px) {
   :root:not([data-theme]) { --pico-font-size: 118.75%; }
+}
+
+/* ---------- Widths ----------
+ * Route pages read as one column; the landing page is wider for its cards.
+ */
+@media (min-width: 768px) {
+  .page-narrow .container { max-width: 46rem; }
+  .page-landing .container { max-width: 68rem; }
+  .hero-facts { max-width: 34rem; }
 }
 
 /* ---------- Basics ---------- */
@@ -338,23 +349,38 @@ section[id] { scroll-margin-top: 1rem; }
 .note { font-size: 0.95rem; color: var(--bb-muted); }
 
 /* ---------- Ride ready ---------- */
-.checklist { list-style: none; padding: 0; }
-.checklist li {
-  list-style: none;
-  position: relative;
-  padding-left: 2rem;
-  margin-bottom: 0.5rem;
+/* Real checkboxes for fun; nothing is saved (autocomplete="off" stops
+   browsers restoring ticks on reload). */
+.checklist { list-style: none; padding-left: 1.25rem; margin-bottom: 0.75rem; }
+.checklist li { list-style: none; margin-bottom: 0.35rem; }
+.checklist label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding-block: 0.2rem;
+  cursor: pointer;
 }
-.checklist li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.2rem;
-  width: 1.1rem;
-  height: 1.1rem;
-  border: 2px solid var(--bb-forest);
-  border-radius: 3px;
+.checklist input[type="checkbox"] {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: 0.1rem 0 0;
+  border-width: 2px;
+  border-color: var(--bb-forest);
 }
+.checklist input:checked + span {
+  color: var(--bb-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--bb-forest);
+}
+.all-set {
+  display: none;
+  margin: 0 0 1.5rem 1.25rem;
+  font-family: var(--bb-heading-font);
+  font-weight: 800;
+  color: var(--bb-forest);
+}
+.checklist:not(:has(input:not(:checked))) + .all-set { display: block; }
 .tips li { margin-bottom: 0.5rem; }
 
 /* ---------- FAQ ---------- */

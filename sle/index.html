@@ -37,7 +37,7 @@
   <script src="../assets/js/status.js" defer></script>
   <script src="../assets/js/map.js" defer></script>
 </head>
-<body>
+<body class="page-narrow">
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Day-of status banner: filled from ../status.json by status.js. Stays hidden if there's nothing for today. -->
@@ -159,13 +159,14 @@
 
       <h3>Before you leave home</h3>
       <ul class="checklist">
-        <li>Helmets on everyone</li>
-        <li>Brakes work</li>
-        <li>Tires pumped</li>
-        <li>Battery charged</li>
-        <li>Lights on</li>
-        <li>Kids seated and buckled the way your bike's passenger setup requires</li>
+        <li><label><input type="checkbox" autocomplete="off"><span>Helmets on everyone</span></label></li>
+        <li><label><input type="checkbox" autocomplete="off"><span>Brakes work</span></label></li>
+        <li><label><input type="checkbox" autocomplete="off"><span>Tires pumped</span></label></li>
+        <li><label><input type="checkbox" autocomplete="off"><span>Battery charged</span></label></li>
+        <li><label><input type="checkbox" autocomplete="off"><span>Lights on</span></label></li>
+        <li><label><input type="checkbox" autocomplete="off"><span>Kids seated and buckled the way your bike's passenger setup requires</span></label></li>
       </ul>
+      <p class="all-set">All set. See you at <span data-season="startPlace">Cooper St &amp; Farmer St</span>!</p>
 
       <h3>On the ride</h3>
       <p class="todo">TODO(Ben): draft tips. Review and edit.</p>
