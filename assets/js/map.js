@@ -1,7 +1,7 @@
 /*
  * Route map. Loads Leaflet only when the map is about to scroll into view.
- * Scroll-wheel zoom is off. On touch screens the map starts locked (page
- * scrolls normally over it) until the reader taps "Tap to move the map".
+ * Scroll-wheel zoom is off. On touch screens one-finger drags scroll the page
+ * past the map; two fingers pinch to zoom and move it.
  * If anything fails, the fallback text stays and the numbered route list
  * below the map carries the information.
  */
@@ -38,7 +38,7 @@
       scrollWheelZoom: false,
       zoomSnap: 0.25,
       dragging: !touch,
-      touchZoom: !touch,
+      touchZoom: true,
       tap: false
     });
 
@@ -63,21 +63,7 @@
       }
     }).addTo(map);
 
-    // Extra top padding keeps the school label clear of the unlock button.
-    map.fitBounds(layer.getBounds(), { paddingTopLeft: [30, 64], paddingBottomRight: [30, 30] });
-
-    if (touch) {
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "map-unlock";
-      btn.textContent = "Tap to move the map";
-      btn.addEventListener("click", function () {
-        map.dragging.enable();
-        map.touchZoom.enable();
-        btn.remove();
-      });
-      box.appendChild(btn);
-    }
+    map.fitBounds(layer.getBounds(), { padding: [30, 30] });
   }
 
   function start() {

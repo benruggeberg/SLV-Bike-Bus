@@ -8,6 +8,8 @@
   The <title>/meta description below also mention them.
 
     month        October               (data-season="month")
+    schedule     data/schedule-sle.json: season dates, no-school days, times
+                 (drives the "Next bus" line; update from the SLVUSD calendar)
     departTime   8:00am                (data-season="departTime")
     arriveTime   8:10–8:15             (data-season="arriveTime")
     startPlace   Cooper St & Farmer St (data-season="startPlace")
@@ -40,6 +42,7 @@
   <link rel="stylesheet" href="../assets/css/site.css">
   <script src="../assets/js/status.js" defer></script>
   <script src="../assets/js/map.js" defer></script>
+  <script src="../assets/js/next-bus.js" defer></script>
 </head>
 <body class="page-narrow">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -47,49 +50,56 @@
   <!-- Day-of status banner: filled from ../status.json by status.js. Stays hidden if there's nothing for today. -->
   <div id="status-banner" class="status-banner" role="status" data-status-url="../status.json" data-routes="sle" hidden></div>
 
-  <header class="site-header container">
-    <nav aria-label="Main">
-      <ul>
-        <li><a href="../" class="site-name">SLV Bike Bus</a></li>
-      </ul>
-      <ul class="section-nav">
-        <li><a href="#join">Join</a></li>
-        <li><a href="#route">Route</a></li>
-        <li><a href="#ready">Ride ready</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+  <div class="scene">
+    <header class="site-header container">
+      <nav aria-label="Main">
+        <ul>
+          <!-- Work-in-progress logo. Replace assets/img/logo-wip.webp (and the icons/og-image) when final. -->
+          <li><a href="../" class="home-link"><img class="header-logo" src="../assets/img/logo-wip.webp" alt="SLV Bike Bus home" width="64" height="64"></a></li>
+        </ul>
+        <ul class="section-nav">
+          <li><a href="#join">Join</a></li>
+          <li><a href="#route">Route</a></li>
+          <li><a href="#ready">Ride ready</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <picture class="scene-art">
+      <source srcset="../assets/img/scene-dark.svg" media="(prefers-color-scheme: dark)">
+      <img src="../assets/img/scene-light.svg" alt="" width="1600" height="200">
+    </picture>
+  </div>
 
   <main id="main" class="container">
 
     <!-- 5.1 Hero -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-top">
-        <!-- Work-in-progress logo. Replace assets/img/logo-wip.webp (and the icons/og-image) when final. -->
-        <img class="logo" src="../assets/img/logo-wip.webp" alt="SLV Bike Bus logo" width="96" height="96">
-        <h1 id="hero-title">SLE Bike Bus</h1>
-      </div>
+      <h1 id="hero-title">SLE Bike Bus</h1>
       <p class="hero-lede">A group bike ride to San Lorenzo Valley Elementary. Grown-ups ride, kids ride along.</p>
-      <dl class="hero-facts">
-        <div>
-          <dt>Leaves</dt>
-          <dd><strong><span data-season="departTime">8:00am</span></strong> from the corner of <span data-season="startPlace">Cooper St &amp; Farmer St</span></dd>
-        </div>
-        <div>
-          <dt>Arrives</dt>
-          <dd>At SLE <strong><span data-season="arriveTime">8:10–8:15</span></strong></dd>
-        </div>
-        <div>
-          <dt>When</dt>
-          <dd>Every school day in <span data-season="month">October</span></dd>
-        </div>
-      </dl>
+      <div class="bus-sign">
+        <!-- Filled by next-bus.js; hidden without JS. -->
+        <p class="next-bus" data-schedule="../data/schedule-sle.json" data-status="../status.json" data-route="sle" aria-live="polite" hidden></p>
+        <dl class="hero-facts">
+          <div>
+            <dt>Leaves</dt>
+            <dd><strong><span data-season="departTime">8:00am</span></strong> from the corner of <span data-season="startPlace">Cooper St &amp; Farmer St</span></dd>
+          </div>
+          <div>
+            <dt>Arrives</dt>
+            <dd>At SLE <strong><span data-season="arriveTime">8:10–8:15</span></strong></dd>
+          </div>
+          <div>
+            <dt>When</dt>
+            <dd>Every school day in <span data-season="month">October</span></dd>
+          </div>
+        </dl>
+      </div>
     </section>
 
     <!-- 5.2 How to join -->
-    <section id="join" aria-labelledby="join-title">
+    <section id="join" class="stop" aria-labelledby="join-title">
       <h2 id="join-title">How to join</h2>
       <ol class="steps">
         <li>
@@ -111,7 +121,7 @@
     </section>
 
     <!-- 5.3 Route and schedule -->
-    <section id="route" aria-labelledby="route-title">
+    <section id="route" class="stop" aria-labelledby="route-title">
       <h2 id="route-title">Route and schedule</h2>
       <p>About 1 mile, 10–15 minutes. One start point: no pickups along the way.</p>
 
@@ -123,8 +133,9 @@
           <p class="route-map-fallback">The map needs JavaScript. The full route is listed below.</p>
         </div>
         <figcaption>
+          <span class="touch-hint">Use two fingers to move the map.</span>
           Open the start point in
-          <a href="https://www.openstreetmap.org/?mlat=37.05582&amp;mlon=-122.07612#map=18/37.05582/-122.07612">OpenStreetMap</a>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=37.05582%2C-122.07612">Google Maps</a>
           or <a href="https://maps.apple.com/?ll=37.05582,-122.07612&amp;q=SLE%20Bike%20Bus%20start">Apple Maps</a>.
         </figcaption>
       </figure>
@@ -147,11 +158,11 @@
     </section>
 
     <!-- 5.4 + 5.5 Who can ride, what to bring, safety tips -->
-    <section id="ready" aria-labelledby="ready-title">
+    <section id="ready" class="stop" aria-labelledby="ready-title">
       <h2 id="ready-title">Ride ready</h2>
 
       <h3>Who can ride</h3>
-      <p>Adults ride. Kids ride as passengers on cargo bikes or in trailers pulled by bikes. Each adult brings their own kids.</p>
+      <p>Adults ride with kids as passengers. Each adult is responsible for their own kids.</p>
 
       <h3>Before you leave home</h3>
       <ul class="checklist">
@@ -175,7 +186,7 @@
     </section>
 
     <!-- 5.6 FAQ -->
-    <section id="faq" aria-labelledby="faq-title">
+    <section id="faq" class="stop" aria-labelledby="faq-title">
       <h2 id="faq-title">FAQ</h2>
       <details>
         <summary>What if I'm running late?</summary>
@@ -210,7 +221,7 @@
     </section>
 
     <!-- 5.7 Contact -->
-    <section id="contact" aria-labelledby="contact-title">
+    <section id="contact" class="stop" aria-labelledby="contact-title">
       <h2 id="contact-title">Contact</h2>
       <p>Questions or ideas? Email <a href="mailto:hello@slvbikebus.org">hello@slvbikebus.org</a>.</p>
       <p>Join the conversation in the <a href="https://www.lovetoride.net/santacruz/groups/6536">SLE Bike Bus group on Love to Ride</a>.</p>

@@ -1,7 +1,9 @@
 # Design token plan (approved, applied)
 
-Colors approved by Ben. Tokens live at the top of `assets/css/site.css`.
-Revisit the colors once the logo exists.
+Colors approved by Ben, then matched to the WIP logo (2026-09-30): forest is the
+logo ring `#143e32`, the accent is the logo's "BIKE" red `#b21d10` (replacing redwood),
+and the page background is a warm off-white `#fbf8ee` with the logo's cream `#f7f1dc`
+as the header sky. Tokens live at the top of `assets/css/site.css`.
 
 ## Idea
 

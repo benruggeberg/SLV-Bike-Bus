@@ -1,6 +1,6 @@
 /*
  * SLV Bike Bus site styles, layered on Pico CSS 2.1.1.
- * Tokens follow DESIGN-PLAN.md. Revisit the colors once the logo exists.
+ * Colors are sampled from the (WIP) logo: ring green, "BIKE" red, cream.
  */
 
 /* ---------- Fonts (self-hosted, SIL OFL) ---------- */
@@ -44,18 +44,19 @@
  * Selectors match Pico's own theme selectors (0,2,0) so these win by load order.
  */
 :root:not([data-theme]) {
-  --bb-forest: #1f4d35;
-  --bb-redwood: #8a3b23;
+  --bb-forest: #143e32;
+  --bb-red: #b21d10;
   --bb-bus: #f5c400;
   --bb-ink: #16201b;
-  --bb-paper: #ffffff;
+  --bb-paper: #fbf8ee;
+  --bb-sky: #f7f1dc;
   --bb-alert: #b3261e;
   --bb-alert-fg: #ffffff;
-  --bb-muted: #5a6660;
-  --bb-rule: #d7ddd9;
+  --bb-muted: #56625c;
+  --bb-rule: #e2dccb;
   --bb-todo: #8f4f00;
   /* Map tiles are always light, so the route line uses the light forest in both modes. */
-  --bb-route: #1f4d35;
+  --bb-route: #143e32;
   --bb-heading-font: "Overpass", system-ui, sans-serif;
 
   --pico-font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
@@ -72,21 +73,22 @@
   --pico-primary: var(--bb-forest);
   --pico-primary-background: var(--bb-forest);
   --pico-primary-border: var(--bb-forest);
-  --pico-primary-underline: rgba(31, 77, 53, 0.5);
-  --pico-primary-hover: #143524;
-  --pico-primary-hover-background: #143524;
-  --pico-primary-hover-border: #143524;
-  --pico-primary-hover-underline: #143524;
-  --pico-primary-focus: rgba(31, 77, 53, 0.35);
+  --pico-primary-underline: rgba(20, 62, 50, 0.5);
+  --pico-primary-hover: #0b271f;
+  --pico-primary-hover-background: #0b271f;
+  --pico-primary-hover-border: #0b271f;
+  --pico-primary-hover-underline: #0b271f;
+  --pico-primary-focus: rgba(20, 62, 50, 0.35);
   --pico-primary-inverse: #ffffff;
   --pico-text-selection-color: rgba(245, 196, 0, 0.45);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
     --bb-forest: #7fcf9f;
-    --bb-redwood: #e79a7c;
+    --bb-red: #ff9a8a;
     --bb-ink: #e8eee9;
     --bb-paper: #23302a;
+    --bb-sky: #2c3b33;
     --bb-alert: #ff6b5f;
     --bb-alert-fg: #1a0000;
     --bb-muted: #a9b5ae;
@@ -116,7 +118,7 @@
   /* min() keeps a side gutter when the cap is wider than the viewport */
   .page-narrow .container { max-width: min(46rem, calc(100% - 3rem)); }
   .page-landing .container { max-width: min(68rem, calc(100% - 3rem)); }
-  .hero-facts { max-width: 34rem; }
+  .bus-sign { max-width: 34rem; }
 }
 
 /* ---------- Basics ---------- */
@@ -161,19 +163,48 @@ main > section + section { margin-top: 2.5rem; }
 /* Anchor targets clear the top of the viewport */
 section[id] { scroll-margin-top: 1rem; }
 
-/* ---------- Header ---------- */
-.site-header nav { flex-wrap: wrap; }
-.site-name { font-size: 1.15rem; color: var(--bb-ink); text-decoration: none; }
-.section-nav { flex-wrap: wrap; }
-.section-nav li { padding-block: 0.25rem; }
+/* ---------- Header scene ----------
+ * The header sits on a cream "sky"; hand-drawn hills and redwoods from the
+ * logo run along the bottom (assets/img/scene-*.svg, one per color scheme).
+ */
+.scene { background: var(--bb-sky); }
+.scene-art img {
+  display: block;
+  width: 100%;
+  height: clamp(64px, 12vw, 180px);
+  object-fit: cover;
+  object-position: 78% 100%;   /* on phones keep the sun and a tree cluster */
+}
+.site-header { padding-block: 0.5rem 0; }
+.site-header nav { flex-wrap: nowrap; align-items: center; gap: 0.75rem; }
+.home-link { display: block; padding: 0; }
+.header-logo { display: block; width: 56px; height: 56px; }
+@media (min-width: 576px) { .header-logo { width: 72px; height: 72px; } }
+.section-nav { flex-wrap: wrap; justify-content: flex-end; }
+.section-nav li { padding-block: 0.2rem; }
+.section-nav a { font-family: var(--bb-heading-font); font-weight: 700; }
 @media (max-width: 575px) {
-  .site-header nav { flex-direction: column; align-items: flex-start; }
-  .site-header nav ul { margin-inline: 0; }
-  .site-header nav ul:first-child li { padding-bottom: 0; padding-inline-start: 0; }
-  .section-nav { --pico-nav-link-spacing-horizontal: 0; }
-  .section-nav li { padding-inline: 0 0.8rem; }
+  .site-header nav ul:first-child { margin-inline-start: 0; }
+  .site-header nav ul:first-child li { padding-inline-start: 0; }
+  /* Two right-aligned rows on phones: Join Route Ride ready / FAQ Contact.
+     The ::after is a full-width flex item that forces the break. */
+  .section-nav {
+    --pico-nav-link-spacing-horizontal: 0;
+    --pico-nav-link-spacing-vertical: 0.2rem;
+    --pico-nav-element-spacing-vertical: 0.2rem;
+    column-gap: 1rem;
+    margin-inline-end: 0;
+  }
+  .section-nav::after { content: ""; flex-basis: 100%; order: 2; }
+  .section-nav li { padding: 0.1rem 0; order: 1; }
+  .section-nav li:nth-child(n+4) { order: 3; }
   .section-nav a { font-size: 0.95rem; }
 }
+
+/* Landing: the big logo stands in the landscape */
+.scene-landing .site-header { display: flex; justify-content: center; padding-top: 1.25rem; }
+.logo-landing { position: relative; z-index: 1; width: 160px; height: 160px; margin-bottom: -48px; }
+@media (min-width: 768px) { .logo-landing { width: 200px; height: 200px; margin-bottom: -70px; } }
 
 /* ---------- Status banner ---------- */
 .status-banner { margin: 0; }
@@ -185,34 +216,64 @@ section[id] { scroll-margin-top: 1rem; }
 }
 .status-item a { color: inherit; text-decoration: underline; }
 .status-label { font-family: var(--bb-heading-font); }
+/* Cancelled has to be unmissable: full-width, big, with a "no" icon. */
 .status-cancelled {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem 0.6rem;
   background: var(--bb-alert);
   color: var(--bb-alert-fg);
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  padding-block: 1.1rem;
+  padding-block: 1.25rem;
+  border-bottom: 5px solid rgba(0, 0, 0, 0.35);
 }
+.status-icon { width: 1.6em; height: 1.6em; flex: none; }
 .status-changed { background: var(--bb-bus); color: #16201b; }
-.status-info    { background: #1f4d35; color: #ffffff; }
+.status-info    { background: #143e32; color: #ffffff; }
 
 /* ---------- Hero ---------- */
-.hero { padding-block: 0.25rem 0; }
-.hero-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.6rem; }
-.hero-top h1 { margin: 0; }
-@media (max-width: 575px) { .hero-top h1 { font-size: 1.85rem; } }
-.logo { flex: none; display: block; width: 76px; height: 76px; }
-@media (min-width: 576px) { .logo { width: 96px; height: 96px; } }
-.logo-landing { width: 180px; height: 180px; margin-bottom: 1rem; }
+main { padding-top: 1.25rem; }
+.hero h1 { margin-bottom: 0.4rem; }
 .hero-lede { margin-bottom: 1rem; }
 
-/* The one bold element: a school-bus-yellow sign with the key facts. */
+/* The bold element: a school-bus-yellow sign with the key facts, topped by a
+   destination board showing the next bus (filled by next-bus.js). */
+.bus-sign {
+  border-radius: var(--pico-border-radius);
+  border-left: 8px solid #16201b;
+  overflow: hidden;
+}
+.next-bus {
+  margin: 0;
+  padding: 0.55rem 1rem;
+  background: #16201b;
+  color: var(--bb-bus);
+  font-family: var(--bb-heading-font);
+  font-weight: 800;
+  line-height: 1.3;
+}
+.next-bus.is-rolling::before {
+  content: "";
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  margin-right: 0.5em;
+  border-radius: 50%;
+  background: var(--bb-bus);
+  vertical-align: 0.05em;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .next-bus.is-rolling::before { animation: bb-blink 1.2s steps(2, jump-none) infinite; }
+}
+@keyframes bb-blink { 50% { opacity: 0.2; } }
 .hero-facts {
   margin: 0;
   padding: 0.5rem 1rem;
   background: var(--bb-bus);
   color: #16201b;
-  border-radius: var(--pico-border-radius);
-  border-left: 8px solid #16201b;
 }
 .hero-facts > div {
   display: grid;
@@ -246,16 +307,8 @@ section[id] { scroll-margin-top: 1rem; }
 .route-map-fallback { padding: 1rem; margin: 0; }
 .route-map-figure figcaption { font-size: 0.9rem; padding-top: 0.4rem; color: var(--bb-muted); }
 .route-tooltip { font-family: var(--bb-heading-font); font-weight: 700; }
-.map-unlock {
-  position: absolute;
-  z-index: 1000;
-  top: 0.6rem;
-  right: 0.6rem;
-  width: auto;
-  margin: 0;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.9rem;
-}
+.touch-hint { display: none; }
+@media (pointer: coarse) { .touch-hint { display: inline; } }
 /* Undo Pico's [role=button] styling on Leaflet's zoom controls */
 .route-map .leaflet-bar a {
   width: 34px;
@@ -335,10 +388,44 @@ section[id] { scroll-margin-top: 1rem; }
   display: block;
   font-family: var(--bb-heading-font);
   font-weight: 800;
-  color: var(--bb-redwood);
+  color: var(--bb-red);
 }
 
 .note { font-size: 0.95rem; color: var(--bb-muted); }
+
+/* ---------- The page as a route ----------
+ * On wide screens a green line runs down the left margin with a stop marker
+ * at each section, like the route list. Hidden where there's no margin.
+ */
+@media (min-width: 1024px) {
+  .stop { position: relative; }
+  .stop::before {                     /* line to the next stop */
+    content: "";
+    position: absolute;
+    left: -2.6rem;
+    top: 0;
+    bottom: -2.5rem;                  /* bridges the gap between sections */
+    width: 6px;
+    background: var(--bb-forest);
+    opacity: 0.85;
+  }
+  .stop:first-of-type::before, section.stop#join::before { top: 1rem; }
+  .stop#contact::before { bottom: auto; height: 1rem; }
+  .stop > h2::before {                /* stop marker */
+    content: "";
+    position: absolute;
+    z-index: 1;
+    left: calc(-2.6rem - 7px);
+    top: 0.25rem;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--bb-paper);
+    border: 5px solid var(--bb-forest);
+    box-sizing: border-box;
+  }
+  .stop#contact > h2::before { background: var(--bb-forest); }
+}
 
 /* ---------- Ride ready ---------- */
 /* Real checkboxes for fun; nothing is saved (autocomplete="off" stops
@@ -416,6 +503,13 @@ details summary { font-weight: 700; }
   text-decoration: none;
 }
 .school-card-live h3, .school-card-live p { color: #16201b; }
+.school-card-live .next-bus {
+  color: var(--bb-bus);
+  margin: 0 0 0.75rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
 .school-card-live .card-go {
   margin-top: auto;
   font-family: var(--bb-heading-font);

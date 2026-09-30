@@ -41,6 +41,17 @@
       var box = document.createElement("div");
       box.className = "status-item status-" + item.level;
 
+      if (item.level === "cancelled") {
+        // Bold "no" sign so a cancellation reads at a glance
+        var icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        icon.setAttribute("viewBox", "0 0 24 24");
+        icon.setAttribute("aria-hidden", "true");
+        icon.setAttribute("class", "status-icon");
+        icon.innerHTML = '<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.5"/>' +
+          '<path d="M5 19 19 5" stroke="currentColor" stroke-width="2.5"/>';
+        box.appendChild(icon);
+      }
+
       var label = document.createElement("strong");
       label.className = "status-label";
       label.textContent = LEVELS[item.level] + ":";
