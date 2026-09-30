@@ -1,6 +1,6 @@
 """Generate the header scene (hills, redwoods, a big redwood trunk, sun, route road)
 in light and dark palettes. Colors follow the brand palette: Redwood Green #1B4332,
-Bark Brown #5A3A28, Sun Gold #FC9D2B, Redwood Cream #F6EBD7.
+Bark Brown #5A3A28, Sun Gold #FDB43C, Redwood Cream #F6EBD7.
 
 Usage: python3 tools/make_scene.py assets/img
 """
@@ -9,11 +9,11 @@ W, H = 1600, 200
 OUT = sys.argv[1]
 
 PALETTES = {
-    "light": dict(sky="#F6EBD7", sun="#FC9D2B", back="#b5d3bf", mid="#7fb596", front="#2d6a4f",
-                  trees="#1B4332", trees_far="#4f8f6f", road="#FC9D2B",
+    "light": dict(sky="#F6EBD7", sun="#FDB43C", back="#b5d3bf", mid="#7fb596", front="#2d6a4f",
+                  trees="#1B4332", trees_far="#4f8f6f", road="#FDB43C",
                   trunk="#5A3A28", bark="#8a5a3c", boughs="#1f5a3c"),
-    "dark":  dict(sky="#2a3a31", sun="#c7862a", back="#34493e", mid="#2d4036", front="#1c2b23",
-                  trees="#13201a", trees_far="#26382e", road="#b98a2c",
+    "dark":  dict(sky="#2a3a31", sun="#c99a35", back="#34493e", mid="#2d4036", front="#1c2b23",
+                  trees="#13201a", trees_far="#26382e", road="#b99a3a",
                   trunk="#3d271b", bark="#553624", boughs="#1a2e24"),
 }
 

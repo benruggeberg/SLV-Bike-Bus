@@ -2,7 +2,7 @@
 
 Brand palette from Ben's logo work (2026-09-30): Redwood Green `#1B4332` (links,
 buttons, progress line), School Red `#C1121F` (the SLE route, times, cancelled
-banner), Sun Gold `#FC9D2B`, the sun in the illustration (the facts sign, next-bus board, info/changed
+banner), Sun Gold `#FDB43C`, a slightly yellower take on the illustration's sun (the facts sign, next-bus board, info/changed
 banners; only ever a background under dark text), Redwood Cream `#F6EBD7` (header
 sky), Bark Brown `#5A3A28` (footer "forest floor", redwood trunk). The family
 illustration (`assets/img/family-*.webp`) rides over the landing hills, ends the

@@ -1,7 +1,7 @@
 /*
  * SLV Bike Bus site styles, layered on Pico CSS 2.1.1.
  * Brand palette (from Ben's logo work): Redwood Green #1B4332, Bark Brown #5A3A28,
- * Sun Gold #FC9D2B (the sun in the family illustration), Redwood Cream #F6EBD7,
+ * Sun Gold #FDB43C (a slightly yellower take on the illustration's sun), Redwood Cream #F6EBD7,
  * School Red #C1121F. Gold is only ever a background under dark text (or text
  * on dark ink); gold text on cream fails contrast.
  */
@@ -49,7 +49,7 @@
 :root:not([data-theme]) {
   --bb-forest: #1B4332;
   --bb-red: #C1121F;
-  --bb-sun: #FC9D2B;
+  --bb-sun: #FDB43C;
   --bb-brown: #5A3A28;
   --bb-cream: #F6EBD7;
   --bb-ink: #16201b;
@@ -91,7 +91,7 @@
   --pico-primary-hover-underline: #0f2a1f;
   --pico-primary-focus: rgba(27, 67, 50, 0.35);
   --pico-primary-inverse: #ffffff;
-  --pico-text-selection-color: rgba(252, 157, 43, 0.35);
+  --pico-text-selection-color: rgba(253, 180, 60, 0.35);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
