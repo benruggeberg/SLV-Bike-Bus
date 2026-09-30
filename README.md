@@ -55,10 +55,6 @@ appear is tagged `data-season="…"`. Also check the landing page's route summar
 Search the repo for `TODO(Ben)` to find each one in place.
 
 - [ ] Final logo: replace `assets/img/logo-wip.webp`, `favicon-48.png`, `apple-touch-icon.png`, `og-image.jpg` (currently cut from the WIP circle)
-- [ ] Disclaimer wording, reviewed (check school/district language): `sle/disclaimer/index.html`
-- [ ] Confirm "running late" answer: FAQ
-- [ ] Safety tips review: #ready, "On the ride"
-- [ ] Partner "Thanks to" line (only with permission): commented out in #contact
 - [ ] Bell time: season comment in `sle/index.html` (not displayed yet)
 
 Decided / done:
@@ -67,5 +63,22 @@ Decided / done:
 - No first-ride sign-in.
 - Rain policy: rain or shine, cancel only when unsafe, "no notice means we're riding."
 - Contact: hello@slvbikebus.org (Porkbun email forwarding).
-- Any bike can ride; no need to say so. No handouts or photo policy for now.
+- Any bike can ride; no need to say so. No handouts, photo policy, or partner thanks line for now.
+- Disclaimer, safety tips, and FAQ answers approved by Ben.
 - Custom domain live with HTTPS enforced (Porkbun DNS: 4 GitHub A records + www CNAME; domain verified).
+
+## Later: "interested" sign-ups for Middle and High School
+
+Goal: on the Middle/High School cards, let parents register interest (email, and a
+checkbox for "I'd help lead"), so there's a contact list ready when a leader appears,
+and the card can show a live count like "5 families interested".
+
+GitHub Pages can't store form submissions, so this needs a small backend.
+Options, simplest first:
+1. Hosted form service (e.g. Tally or Formspree) for the sign-up, plus a count in a
+   JSON file (like `status.json`) that Ben updates by hand. No new infrastructure,
+   but the count is manual.
+2. A Cloudflare Worker + D1 (free tier) with a POST endpoint for sign-ups and a GET
+   endpoint that returns only the counts. The count updates live; emails stay private.
+Either way: collect only email, school, and "would help lead"; state how emails are
+used next to the form; never show emails publicly.
