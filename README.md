@@ -36,7 +36,7 @@ works fully on the custom domain.
 
 Cookieless page counts with GoatCounter: dashboard at https://slvbikebus.goatcounter.com.
 The script is self-hosted (`assets/vendor/goatcounter/`), sets no cookies, and skips
-localhost/LAN previews. Every page's footer says so.
+localhost/LAN previews. The disclaimer page footer says so.
 
 - Clicks on the "I can help lead" buttons are counted as events `lead-slvms` / `lead-slvhs`.
 - To measure flyers, point new QR codes at `https://slvbikebus.org/sle/?ref=flyer`;
