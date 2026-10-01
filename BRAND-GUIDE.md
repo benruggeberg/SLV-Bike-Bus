@@ -210,6 +210,9 @@ Preferred visual vocabulary:
 - bold, friendly outlines
 - simplified forms with enough detail to feel handcrafted, not generic
 
+### Badge on dark backgrounds
+On dark surfaces, give the circular badge a thin Redwood Cream outline (about 3px at web sizes) so its dark green ring doesn't disappear into the background.
+
 ### Important distinction
 **Do not make every graphic look like the logo.** The logo should remain stable. Supporting illustrations may change pose, composition, season, school, and activity.
 
@@ -395,6 +398,7 @@ Gold buttons/callouts:
 - use Rule for borders
 - use School Red only when the content is operational/school-specific
 - keep shadows subtle or omit them
+- **Clickable cards** (e.g. a live school card) get a solid offset edge, not a soft shadow: 3px Ink edge at rest, lifting to 6px on hover/focus. Use a Redwood Cream edge in dark mode. Non-clickable cards stay flat.
 
 ### Status messages
 Use semantic meaning first, brand color second.

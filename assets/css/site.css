@@ -233,12 +233,15 @@ main > section + section { margin-top: 2.5rem; }
 /* Anchor targets clear the top of the viewport */
 section[id] { scroll-margin-top: 1rem; }
 
-/* ---------- Header scene ----------
- * The header sits on a cream "sky"; hand-drawn hills and redwoods from the
- * logo run along the bottom (assets/img/scene-*.svg, one per color scheme).
+/* ---------- Masthead ----------
+ * A plain cream band with the logo and nav. The landscape lives at the bottom
+ * of the page instead (see Footer).
  */
-.scene { background: var(--color-elevated); }
-.scene { --scene-h: clamp(64px, 12vw, 180px); }
+.masthead { background: var(--color-elevated); padding-bottom: 0.5rem; }
+
+/* Landscape strip: hand-drawn hills and redwoods (assets/img/scene-*.svg, one
+   per color scheme). Sits just above the brown "forest floor" footer. */
+.scene-art { --scene-h: clamp(64px, 12vw, 180px); display: block; }
 .scene-art img {
   display: block;
   width: 100%;
@@ -272,10 +275,20 @@ section[id] { scroll-margin-top: 1rem; }
   .section-nav a { font-size: 0.95rem; }
 }
 
-/* Landing: the big logo stands in the landscape */
-.scene-landing .site-header { display: flex; justify-content: center; padding-top: 1.25rem; }
-.logo-landing { position: relative; z-index: 1; width: 160px; height: 160px; margin-bottom: -48px; }
-@media (min-width: 768px) { .logo-landing { width: 200px; height: 200px; margin-bottom: -70px; } }
+/* Landing: the big logo centered in the masthead */
+.masthead-landing .site-header { display: flex; justify-content: center; padding-block: 1.25rem 0.75rem; }
+.logo-landing { display: block; width: 160px; height: 160px; }
+@media (min-width: 768px) { .logo-landing { width: 200px; height: 200px; } }
+
+/* Dark mode: the logo's dark green ring disappears into the dark header, so give
+   it a thin Redwood Cream outline, like the sticker edge on the illustration. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .header-logo,
+  :root:not([data-theme]) .logo-landing {
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px var(--brand-cream);
+  }
+}
 
 /* ---------- The family illustration ----------
  * Transparent WebP with a white sticker outline, so it works on cream and on
@@ -613,14 +626,29 @@ details summary { font-weight: 700; }
   color: var(--ink);
   border-left: 8px solid var(--ink);
   text-decoration: none;
+  /* A solid offset edge (no blur), like a raised sign, shows the whole card is
+     clickable; it lifts a little more on hover/focus. */
+  --card-edge: var(--ink);
+  box-shadow: 3px 3px 0 var(--card-edge);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.school-card-live:hover,
+.school-card-live:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--card-edge);
+}
+.school-card-live:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 var(--card-edge); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .school-card-live { --card-edge: var(--brand-cream); }
 }
 .school-card-live h3, .school-card-live p { color: var(--ink); }
-.school-card-live .next-bus {
-  color: var(--brand-gold);
-  margin: 0 0 0.75rem;
-  padding: 0.4rem 0.7rem;
-  border-radius: 4px;
-  font-size: 0.95rem;
+.card-active { display: flex; align-items: center; gap: 0.45em; }
+.live-dot {
+  width: 0.65em;
+  height: 0.65em;
+  border-radius: 50%;
+  background: var(--brand-green);
+  box-shadow: 0 0 0 3px rgba(27, 67, 50, 0.25);
 }
 .school-card-live .card-go {
   margin-top: auto;
@@ -652,11 +680,12 @@ details summary { font-weight: 700; }
 p.todo { margin-block: 0.5rem 1rem; }
 
 /* ---------- Footer ----------
- * On /sle/ the route ends with the family riding in over a cream band; every
- * page ends on a Bark Brown "forest floor" with the disclaimer in cream.
+ * Every page ends in the landscape: cream sky, hills and redwoods, then the
+ * Bark Brown "forest floor" (dirt) with the disclaimer in cream. On /sle/ the
+ * family rides in on the cream sky above the hills.
  */
-.site-footer { margin-top: 3rem; }
-.footer-art { text-align: center; }
+.site-footer { margin-top: 3rem; padding: 0; background: var(--color-elevated); }   /* Pico pads body > footer; the dirt should reach the bottom */
+.footer-art { text-align: center; padding-top: 1.75rem; }
 .footer-art + .footer-floor { margin-top: 0; }
 .site-footer:has(.footer-art) { margin-top: 1.5rem; }
 .family-footer { width: min(80vw, 420px); }
