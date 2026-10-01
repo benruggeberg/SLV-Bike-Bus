@@ -707,6 +707,7 @@ p.todo { margin-block: 0.5rem 1rem; }
 }
 .footer-floor p { color: var(--brand-cream); }
 .footer-floor p:last-child { margin-bottom: 0; }
+.footer-floor .privacy-note { opacity: 0.85; }
 .footer-floor a { color: var(--brand-cream); text-decoration-color: rgba(246, 235, 215, 0.6); }
 .footer-floor a:hover { text-decoration-color: var(--brand-cream); }
 .footer-floor :focus-visible { outline-color: var(--brand-cream); }

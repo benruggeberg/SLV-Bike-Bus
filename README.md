@@ -32,6 +32,18 @@ Page links use relative paths, so the site works both on the `github.io` project
 and on the custom domain. The exception is `404.html`, which uses root paths and only
 works fully on the custom domain.
 
+## Analytics
+
+Cookieless page counts with GoatCounter: dashboard at https://slvbikebus.goatcounter.com.
+The script is self-hosted (`assets/vendor/goatcounter/`), sets no cookies, and skips
+localhost/LAN previews. Every page's footer says so.
+
+- Clicks on the "I can help lead" buttons are counted as events `lead-slvms` / `lead-slvhs`.
+- To measure flyers, point new QR codes at `https://slvbikebus.org/sle/?ref=flyer`;
+  GoatCounter reports `ref` as the source. (The `/sle/` path itself never changes.)
+- To stop counting your own visits on a device, open
+  `https://slvbikebus.org/#toggle-goatcounter` once in that browser.
+
 ## Preview locally
 
 ```sh
