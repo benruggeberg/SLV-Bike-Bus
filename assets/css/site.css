@@ -249,7 +249,7 @@ section[id] { scroll-margin-top: 1rem; }
   aspect-ratio: 1600 / 200;    /* natural shape: never crops the treetop or sun */
   min-height: 64px;            /* phones: keep it tall enough; crop the sides instead */
   object-fit: cover;
-  object-position: 78% 100%;   /* on phones keep the redwood, sun and a tree cluster */
+  object-position: 78% 100%;   /* on phones keep the redwood and a tree cluster */
 }
 .site-header { padding-block: 0.5rem 0; }
 .site-header nav { flex-wrap: nowrap; align-items: center; gap: 0.75rem; }

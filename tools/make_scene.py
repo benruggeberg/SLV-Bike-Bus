@@ -1,4 +1,4 @@
-"""Generate the header scene (hills, redwoods, a big redwood trunk, sun, route road)
+"""Generate the landscape strip (hills, redwoods, one big redwood, route road)
 in light and dark palettes. Colors follow the brand palette: Redwood Green #1B4332,
 Bark Brown #5A3A28, Sun Gold #FDB43C, Redwood Cream #F6EBD7.
 
@@ -9,10 +9,10 @@ W, H = 1600, 200
 OUT = sys.argv[1]
 
 PALETTES = {
-    "light": dict(sky="#F6EBD7", sun="#FDB43C", back="#b5d3bf", mid="#7fb596", front="#2d6a4f",
+    "light": dict(sky="#F6EBD7", back="#b5d3bf", mid="#7fb596", front="#2d6a4f",
                   trees="#1B4332", trees_far="#4f8f6f", road="#FDB43C",
                   trunk="#5A3A28", bark="#8a5a3c", boughs="#1f5a3c"),
-    "dark":  dict(sky="#2a3a31", sun="#c99a35", back="#34493e", mid="#2d4036", front="#1c2b23",
+    "dark":  dict(sky="#2a3a31", back="#34493e", mid="#2d4036", front="#1c2b23",
                   trees="#13201a", trees_far="#26382e", road="#b99a3a",
                   trunk="#3d271b", bark="#553624", boughs="#1a2e24"),
 }
@@ -118,7 +118,6 @@ def build(p, hills_only=False):
     trunk, grooves, boughs = big_redwood(540, 180, rnd)
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" preserveAspectRatio="xMidYMax slice">
 <rect width="{W}" height="{H}" fill="{p["sky"]}"/>
-{"" if hills_only else f'<circle cx="1250" cy="92" r="40" fill="{p["sun"]}"/>'}
 <path d="{back}" fill="{p["back"]}"/>
 {group(far_trees, p["trees_far"])}
 <path d="{mid}" fill="{p["mid"]}"/>
@@ -131,7 +130,7 @@ def build(p, hills_only=False):
 </svg>
 '''
 
-# hills_only=True drops the sun and big redwood (e.g. behind an illustration that
+# hills_only=True drops the big redwood (e.g. behind an illustration that
 # brings its own); not used on the site right now.
 for name, pal in PALETTES.items():
     with open(os.path.join(OUT, f"scene-{name}.svg"), "w") as f:
