@@ -8,9 +8,10 @@
   The <title>/meta description below also mention them.
 
     month        October               (data-season="month")
-    schedule     data/schedule-sle.json: season dates, no-school days, times
+    schedule     data/schedule-sle.json: season dates, no-school days, meet/depart times
                  (drives the "Next bus" line; update from the SLVUSD calendar)
-    departTime   8:00am                (data-season="departTime")
+    meetTime     8:00am                (data-season="meetTime")
+    departTime   8:05am                (data-season="departTime")
     arriveTime   8:10–8:15             (data-season="arriveTime")
     startPlace   Cooper St & Farmer St (data-season="startPlace")
     bellTime     TODO(Ben)             (not shown on the page yet)
@@ -23,7 +24,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SLE Bike Bus: ride to San Lorenzo Valley Elementary</title>
-  <meta name="description" content="A free group bike ride to SLV Elementary. Leaves 8:00am from Cooper St &amp; Farmer St every school day in October. Here's how to join.">
+  <meta name="description" content="A free group bike ride to SLV Elementary. Meet at 8:00am, leave at 8:05am from Cooper St &amp; Farmer St, every school day in October. Here's how to join.">
   <meta name="color-scheme" content="light dark">
   <link rel="canonical" href="https://slvbikebus.org/sle/">
   <link rel="icon" type="image/png" href="../assets/img/favicon-48.png">
@@ -32,7 +33,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="SLV Bike Bus">
   <meta property="og:title" content="SLE Bike Bus">
-  <meta property="og:description" content="Ride to SLV Elementary together. Leaves 8:00am from Cooper &amp; Farmer every school day in October.">
+  <meta property="og:description" content="Ride to SLV Elementary together. Meet at 8:00am, leave at 8:05am from Cooper &amp; Farmer, every school day in October.">
   <meta property="og:url" content="https://slvbikebus.org/sle/">
   <meta property="og:image" content="https://slvbikebus.org/assets/img/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -82,8 +83,12 @@
         <p class="next-bus" data-schedule="../data/schedule-sle.json" data-status="../status.json" data-route="sle" aria-live="polite" hidden></p>
         <dl class="hero-facts">
           <div>
+            <dt>Meet</dt>
+            <dd><strong><span data-season="meetTime">8:00am</span></strong> at the corner of <span data-season="startPlace">Cooper St &amp; Farmer St</span></dd>
+          </div>
+          <div>
             <dt>Leaves</dt>
-            <dd><strong><span data-season="departTime">8:00am</span></strong> from the corner of <span data-season="startPlace">Cooper St &amp; Farmer St</span></dd>
+            <dd><strong><span data-season="departTime">8:05am</span></strong></dd>
           </div>
           <div>
             <dt>Arrives</dt>
@@ -111,7 +116,7 @@
         <li>Get morning updates: text <strong>@CODE</strong> to <strong>81010</strong>.</li>
         and mention texts in the rain FAQ below. -->
         <li>
-          Show up at <span data-season="startPlace">Cooper St &amp; Farmer St</span> by <span data-season="departTime">8:00am</span> with your kids and your bike.
+          Show up at <span data-season="startPlace">Cooper St &amp; Farmer St</span> by <span data-season="meetTime">8:00am</span> with your kids and your bike.
         </li>
         <li>
           Log your rides on Love to Ride to win prizes!
@@ -123,7 +128,7 @@
     <!-- 5.3 Route and schedule -->
     <section id="route" class="stop" aria-labelledby="route-title">
       <h2 id="route-title">Route and schedule</h2>
-      <p>About 1 mile, 10–15 minutes. One start point: no pickups along the way.</p>
+      <p>About 1 mile, approx. 7 minutes.</p>
 
       <figure class="route-map-figure">
         <div id="route-map" class="route-map"
@@ -143,7 +148,7 @@
       <ol class="route-stops">
         <li>
           <span class="stop-name">Start: corner of <span data-season="startPlace">Cooper St &amp; Farmer St</span></span>
-          <span class="stop-time">Leaves <span data-season="departTime">8:00am</span></span>
+          <span class="stop-time">Meet <span data-season="meetTime">8:00am</span> · Leave <span data-season="departTime">8:05am</span></span>
         </li>
         <li><span class="stop-name">Cross the Fall Creek pedestrian bridge</span></li>
         <li><span class="stop-name">Hwy 9 shoulder from Fall Creek Dr to SLV High School</span></li>
@@ -190,7 +195,7 @@
       <h2 id="faq-title">FAQ</h2>
       <details>
         <summary>What if I'm running late?</summary>
-        <p>The bus leaves at <span data-season="departTime">8:00am</span> so everyone gets to school before the bell.</p>
+        <p>The bus leaves at <span data-season="departTime">8:05am</span> so everyone gets to school before the bell. If we've already left, you can still enjoy a solo ride :)</p>
       </details>
       <details>
         <summary>What happens if it rains?</summary>
@@ -199,8 +204,14 @@
         <p>And it's always your call to skip a day.</p>
       </details>
       <details>
-        <summary>Does it cost anything?</summary>
-        <p>No. It's a free activity organized by parents.</p>
+        <summary>Where will we park our bikes at the school?</summary>
+        <p>The SLE school has asked us to park outside the fence near the mural. Make sure not to completely block the sidewalk.</p>
+        <!-- TODO(Ben): add the photo of the parking spot, e.g.
+        <img src="../assets/img/sle-bike-parking.webp" alt="…" width="…" height="…" loading="lazy"> -->
+      </details>
+      <details>
+        <summary>Can we bike on Hwy 9?</summary>
+        <p>Yes, Caltrans has confirmed our route and encouraged staying on the west, southbound shoulder. Caltrans also communicated with CHP and both are aligned on letting us ride this segment.</p>
       </details>
       <details>
         <summary>Does it run after <span data-season="month">October</span>?</summary>
@@ -229,7 +240,7 @@
   <footer class="site-footer">
     <div class="footer-art container">
       <img class="family family-footer" src="../assets/img/family-480.webp" srcset="../assets/img/family-480.webp 480w, ../assets/img/family-960.webp 960w" sizes="(min-width: 768px) 420px, 80vw" width="480" height="386" alt="A mountain lion on a red cargo bike carrying two cheering cubs past the redwoods" loading="lazy" decoding="async">
-      <p class="sendoff">See you at <span data-season="startPlace">Cooper St &amp; Farmer St</span> at <span data-season="departTime">8:00am</span>!</p>
+      <p class="sendoff">See you at <span data-season="startPlace">Cooper St &amp; Farmer St</span> at <span data-season="meetTime">8:00am</span>!</p>
     </div>
     <picture class="scene-art">
       <source srcset="../assets/img/scene-dark.svg" media="(prefers-color-scheme: dark)">

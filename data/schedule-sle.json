@@ -1,6 +1,7 @@
 {
-  "_comment": "Riding days for the 'next bus' line: every weekday from start to end, except noSchool dates. Update each season from the SLVUSD calendar. Times are America/Los_Angeles, 24-hour.",
-  "departTime": "08:00",
+  "_comment": "Riding days for the 'next bus' line: every weekday from start to end, except noSchool dates. Update each season from the SLVUSD calendar. Times are America/Los_Angeles, 24-hour: meetTime is when families gather, departTime is when the bus rolls.",
+  "meetTime": "08:00",
+  "departTime": "08:05",
   "arriveBy": "08:15",
   "start": "2026-10-01",
   "end": "2026-10-30",

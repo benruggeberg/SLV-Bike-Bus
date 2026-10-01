@@ -16,8 +16,8 @@
 
   var DAY_MS = 86400000;
   var WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  var MONTHS = ["January", "February", "March", "April", "May", "June", "July",
-    "August", "September", "October", "November", "December"];
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
+    "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   // Current date and minutes-since-midnight in Los Angeles.
   function nowLA() {
@@ -49,25 +49,29 @@
       dateStr !== cancelled;
   }
 
+  // "Tomorrow, Friday" / "Monday, Oct 12": always name the day so nobody has
+  // to work out which "tomorrow" a stale screen meant.
   function dayLabel(dateStr, today) {
     var diff = Math.round((toUTC(dateStr) - toUTC(today)) / DAY_MS);
     var d = new Date(toUTC(dateStr));
-    if (diff === 1) return "tomorrow";
-    if (diff < 7) return WEEKDAYS[d.getUTCDay()];
-    return WEEKDAYS[d.getUTCDay()] + ", " + MONTHS[d.getUTCMonth()] + " " + d.getUTCDate();
+    var weekday = WEEKDAYS[d.getUTCDay()];
+    if (diff === 1) return "Tomorrow, " + weekday;
+    return weekday + ", " + MONTHS[d.getUTCMonth()] + " " + d.getUTCDate();
   }
 
+  // Families gather at meetTime; the bus rolls at departTime.
   // Returns { text, rolling }.
   function message(sched, cancelledDate) {
     var now = nowLA();
-    var depart = toMinutes(sched.departTime), arrive = toMinutes(sched.arriveBy);
-    var at = " at " + clock(sched.departTime);
+    var meet = toMinutes(sched.meetTime), depart = toMinutes(sched.departTime), arrive = toMinutes(sched.arriveBy);
+    var meetAt = ". Meet at " + clock(sched.meetTime);
 
     if (isRidingDay(now.date, sched, cancelledDate)) {
-      var until = depart - now.minutes;
-      if (until > 90) return { text: "Next bus: today" + at };
-      if (until > 1) return { text: "Next bus leaves in " + until + " minutes" };
-      if (until >= 0) return { text: "The bus is leaving now", rolling: true };
+      var untilMeet = meet - now.minutes;
+      if (untilMeet > 90) return { text: "Next bus: Today" + meetAt };
+      if (untilMeet > 1) return { text: "Meet in " + untilMeet + " minutes. Leaving at " + clock(sched.departTime) };
+      if (now.minutes < depart) return { text: "Meeting now. Leaving at " + clock(sched.departTime), rolling: true };
+      if (now.minutes === depart) return { text: "The bus is leaving now", rolling: true };
       if (now.minutes < arrive) return { text: "Rolling now. Arriving at school by " + clock(sched.arriveBy), rolling: true };
     }
 
@@ -76,7 +80,7 @@
     for (var t = toUTC(now.date) + DAY_MS; t <= toUTC(sched.end); t += DAY_MS) {
       var d = toStr(t);
       if (isRidingDay(d, sched, cancelledDate)) {
-        return { text: prefix + (beforeSeason ? "First bus: " : "Next bus: ") + dayLabel(d, now.date) + at };
+        return { text: prefix + (beforeSeason ? "First bus: " : "Next bus: ") + dayLabel(d, now.date) + meetAt };
       }
     }
     if (beforeSeason) return null;
@@ -100,7 +104,7 @@
     Promise.all([getJSON(el.getAttribute("data-schedule")), statusReq])
       .then(function (res) {
         var sched = res[0], cancelled = res[1];
-        if (!sched.start || !sched.end || !sched.departTime || !sched.arriveBy || !Array.isArray(sched.noSchool)) {
+        if (!sched.start || !sched.end || !sched.meetTime || !sched.departTime || !sched.arriveBy || !Array.isArray(sched.noSchool)) {
           throw new Error("schedule is missing fields");
         }
         function update() {

@@ -82,6 +82,7 @@ match the final logo), edit `PALETTES` and run `python3 tools/make_scene.py asse
 Search the repo for `TODO(Ben)` to find each one in place.
 
 - [ ] Bell time: season comment in `sle/index.html` (not displayed yet)
+- [ ] Photo of the SLE bike parking spot (outside the fence by the mural): placeholder in the parking FAQ
 
 Decided / done:
 - Route line traced from `SLV_Bike_Bus_Route.gpx` (about 1.04 miles); good enough for now.
