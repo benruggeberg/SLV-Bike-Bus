@@ -65,21 +65,39 @@ def bough(x0, y, length, side, rnd):
     return "M" + " L".join(f"{a:.1f},{b:.1f}" for a, b in pts) + " Z"
 
 def big_redwood(x, base, rnd):
-    """A giant trunk running off the top edge, flared at the base, with bark
-    grooves and drooping foliage sprays on both sides."""
-    top_w, base_w = 44, 70
-    trunk = (f"M{x - top_w/2:.1f},-5 L{x + top_w/2:.1f},-5 "
-             f"C{x + top_w/2 + 2:.1f},{base * 0.6:.1f} {x + base_w/2 - 4:.1f},{base - 20:.1f} {x + base_w/2 + 10:.1f},{base + 6} "
+    """A whole old-growth redwood that fits inside the strip: a narrow spire,
+    a tall columnar crown of short drooping sprays, and a long bare, flared,
+    grooved trunk below it. It is a complete tree wherever the strip sits on
+    the page (it used to run off the top edge, which only worked in a header)."""
+    apex, crown_bottom = 10, 96
+    top_w, base_w = 16, 62
+    t0 = crown_bottom - 14      # trunk starts hidden under the lowest sprays
+    trunk = (f"M{x - top_w/2:.1f},{t0} L{x + top_w/2:.1f},{t0} "
+             f"C{x + top_w/2 + 3:.1f},{base * 0.72:.1f} {x + base_w/2 - 8:.1f},{base - 14:.1f} {x + base_w/2 + 10:.1f},{base + 6} "
              f"L{x - base_w/2 - 10:.1f},{base + 6} "
-             f"C{x - base_w/2 + 4:.1f},{base - 20:.1f} {x - top_w/2 - 2:.1f},{base * 0.6:.1f} {x - top_w/2:.1f},-5 Z")
+             f"C{x - base_w/2 + 8:.1f},{base - 14:.1f} {x - top_w/2 - 3:.1f},{base * 0.72:.1f} {x - top_w/2:.1f},{t0} Z")
     grooves = ""
-    for k in (-0.28, 0.02, 0.3):
-        grooves += f"M{x + k * top_w:.1f},2 L{x + k * base_w * 0.9:.1f},{base - 8} "
-    boughs = []
-    for side, y, length in ((-1, 10, 70), (1, 24, 62), (-1, 44, 56), (1, 60, 48), (-1, 78, 38), (1, 92, 30)):
-        edge = x + side * (top_w / 2 - 4)
-        boughs.append(bough(edge, y, length, side, rnd))
-    return trunk, grooves, "".join(boughs)
+    for k in (-0.25, 0.05, 0.32):
+        grooves += f"M{x + k * top_w:.1f},{crown_bottom + 6} L{x + k * base_w * 0.85:.1f},{base - 6} "
+    # spire, then a column of short sprays that grow from the trunk's center line
+    spire = f"M{x:.1f},{apex} L{x + 6:.1f},{apex + 22} L{x - 6:.1f},{apex + 22} Z"
+    # a narrow green spine so no sky shows where left and right sprays meet
+    spine = f"M{x - 2:.1f},{apex + 8} L{x + 2:.1f},{apex + 8} L{x + 7:.1f},{crown_bottom + 2} L{x - 7:.1f},{crown_bottom + 2} Z"
+    boughs = [spire, spine]
+    tiers = 8
+    for k in range(tiers):
+        t = k / (tiers - 1)
+        y = apex + 16 + t * (crown_bottom - apex - 16)
+        length = 9 + 20 * (t ** 0.7)               # narrow, columnar crown
+        for side in ((-1, 1) if k % 2 == 0 else (1, -1)):
+            yy = y + (0 if side == -1 else 4)
+            boughs.append(bough(x, yy, length * rnd.uniform(0.8, 1.1), side, rnd))
+    return trunk, grooves, boughs
+
+def group(shapes, fill):
+    """Each shape gets its own <path>: overlapping shapes in one path can cancel
+    each other out (opposite winding) and punch holes showing the sky."""
+    return f'<g fill="{fill}">' + "".join(f'<path d="{d}"/>' for d in shapes) + "</g>"
 
 def build(p, hills_only=False):
     rnd = random.Random(7)
@@ -102,12 +120,12 @@ def build(p, hills_only=False):
 <rect width="{W}" height="{H}" fill="{p["sky"]}"/>
 {"" if hills_only else f'<circle cx="1250" cy="92" r="40" fill="{p["sun"]}"/>'}
 <path d="{back}" fill="{p["back"]}"/>
-<path d="{"".join(far_trees)}" fill="{p["trees_far"]}"/>
+{group(far_trees, p["trees_far"])}
 <path d="{mid}" fill="{p["mid"]}"/>
-<path d="{"".join(near_trees)}" fill="{p["trees"]}"/>
+{group(near_trees, p["trees"])}
 {"" if hills_only else f"""<path d="{trunk}" fill="{p["trunk"]}"/>
 <path d="{grooves}" fill="none" stroke="{p["bark"]}" stroke-width="4" stroke-linecap="round"/>
-<path d="{boughs}" fill="{p["boughs"]}"/>"""}
+{group(boughs, p["boughs"])}"""}
 <path d="{front}" fill="{p["front"]}"/>
 <path d="{road}" fill="none" stroke="{p["road"]}" stroke-width="3" stroke-dasharray="18 12" stroke-linecap="round"/>
 </svg>
