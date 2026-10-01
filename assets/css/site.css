@@ -44,69 +44,113 @@
 }
 
 /* ---------- Tokens ----------
+ * Follows BRAND-GUIDE.md §10. Raw brand values never change between light and
+ * dark mode; components use the semantic --color-* aliases (which do) or a raw
+ * value where a fixed color is the point (e.g. Ink text on Sun Gold).
  * Selectors match Pico's own theme selectors (0,2,0) so these win by load order.
  */
 :root:not([data-theme]) {
-  --bb-forest: #1B4332;
-  --bb-red: #C1121F;
-  --bb-sun: #FDB43C;
-  --bb-brown: #5A3A28;
-  --bb-cream: #F6EBD7;
-  --bb-ink: #16201b;
-  --bb-paper: #fcf8f0;
-  --bb-sky: var(--bb-cream);
-  --bb-alert: #C1121F;
-  --bb-alert-fg: #ffffff;
-  --bb-focus: var(--bb-forest);
-  --bb-muted: #56625c;
-  --bb-rule: #e2dccb;
-  --bb-todo: #8f4f00;
-  /* The actual SLE route (map line + stop strip) is drawn in the logo red, so it
-     reads differently from the green page-progress line. Map tiles are always
-     light, so the map uses the light red in both modes. */
-  --bb-route: #C1121F;
-  --bb-line: var(--bb-red);
-  --bb-heading-font: "Overpass", system-ui, sans-serif;
-  --bb-track: #dcd6c2;          /* untraveled page-route line */
-  --bb-track-marker: #9fb0a7;   /* untraveled stop outline */
+  /* Master brand */
+  --brand-green: #1B4332;
+  --brand-gold: #FDB43C;
+  --brand-cream: #F6EBD7;
+  --brand-bark: #5A3A28;
 
-  --pico-font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
-  --pico-font-size: 112.5%;
+  /* Neutrals */
+  --ink: #16201B;
+  --paper: #FCF8F0;
+  --muted: #56625C;
+  --rule: #E2DCCB;
+
+  /* Shared SLV school/campus accent (not a master brand color) */
+  --school-red: #C1121F;
+  --school-red-dark: #FF9A8A;
+  --school-accent: var(--school-red);
+  --route-line: var(--school-red);
+
+  /* Typography */
+  --font-heading: "Overpass", Arial, sans-serif;
+  --font-body: "Atkinson Hyperlegible", Arial, sans-serif;
+  --weight-heading: 700;
+  --weight-display: 800;
+  --weight-body: 400;
+  --weight-body-bold: 700;
+
+  /* Dark mode values */
+  --dark-bg: #23302A;
+  --dark-elevated: #2A3A31;
+  --dark-text: #E8EEE9;
+  --dark-green: #7FCF9F;
+  --dark-bark: #3D271B;
+
+  /* Semantic aliases (light) */
+  --color-text: var(--ink);
+  --color-background: var(--paper);
+  --color-elevated: var(--brand-cream);   /* header sky, elevated surfaces */
+  --color-green: var(--brand-green);      /* links, progress, green accents */
+  --color-link: var(--color-green);
+  --color-primary-action: var(--color-green);
+  --color-highlight: var(--brand-gold);
+  --color-school-accent: var(--school-accent);
+  --color-route: var(--route-line);
+  --color-divider: var(--rule);
+  --color-muted: var(--muted);
+  --color-footer: var(--brand-bark);
+  --color-focus: var(--brand-green);
+  --color-alert: var(--school-red);       /* cancelled banner, with white text + icon */
+  --color-track: #dcd6c2;                 /* untraveled page-progress line */
+  --color-track-marker: #9fb0a7;          /* untraveled stop outline */
+  --color-todo: #8f4f00;
+
+  --pico-font-family: var(--font-body);
+  --pico-font-size: 106.25%;   /* 17px body on phones/tablets */
   --pico-line-height: 1.55;
   --pico-border-radius: 6px;
-  --pico-background-color: var(--bb-paper);
-  --pico-color: var(--bb-ink);
-  --pico-h1-color: var(--bb-ink);
-  --pico-h2-color: var(--bb-ink);
-  --pico-h3-color: var(--bb-ink);
-  --pico-muted-color: var(--bb-muted);
-  --pico-muted-border-color: var(--bb-rule);
-  --pico-primary: var(--bb-forest);
-  --pico-primary-background: var(--bb-forest);
-  --pico-primary-border: var(--bb-forest);
+  --pico-background-color: var(--color-background);
+  --pico-color: var(--color-text);
+  --pico-h1-color: var(--color-text);
+  --pico-h2-color: var(--color-text);
+  --pico-h3-color: var(--color-text);
+  --pico-muted-color: var(--color-muted);
+  --pico-muted-border-color: var(--color-divider);
+  --pico-primary: var(--color-link);
+  --pico-primary-background: var(--color-primary-action);
+  --pico-primary-border: var(--color-primary-action);
   --pico-primary-underline: rgba(27, 67, 50, 0.5);
   --pico-primary-hover: #0f2a1f;
   --pico-primary-hover-background: #0f2a1f;
   --pico-primary-hover-border: #0f2a1f;
   --pico-primary-hover-underline: #0f2a1f;
   --pico-primary-focus: rgba(27, 67, 50, 0.35);
-  --pico-primary-inverse: #ffffff;
+  --pico-primary-inverse: var(--paper);
   --pico-text-selection-color: rgba(253, 180, 60, 0.35);
 }
+
+/* School-level hooks: SLE, SLVMS and SLVHS share the campus red and route.
+   Distinguish schools with names, destinations and times, not colors. */
+[data-school="sle"],
+[data-school="slvms"],
+[data-school="slvhs"] {
+  --school-accent: var(--school-red);
+  --route-line: var(--school-red);
+}
+
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --bb-forest: #7fcf9f;
-    --bb-red: #ff9a8a;
-    --bb-ink: #e8eee9;
-    --bb-paper: #23302a;
-    --bb-sky: #2a3a31;
-    --bb-brown: #3d271b;
-    --bb-focus: var(--bb-sun);
-    --bb-track: #3a4b42;
-    --bb-track-marker: #5f7469;
-    --bb-muted: #a9b5ae;
-    --bb-rule: #3d4f45;
-    --bb-todo: #ffb74d;
+    --school-accent: var(--school-red-dark);
+    --route-line: var(--school-red-dark);
+
+    --color-text: var(--dark-text);
+    --color-background: var(--dark-bg);
+    --color-elevated: var(--dark-elevated);
+    --color-green: var(--dark-green);
+    --color-divider: #3d4f45;
+    --color-muted: #a9b5ae;
+    --color-footer: var(--dark-bark);
+    --color-focus: var(--brand-gold);
+    --color-track: #3a4b42;
+    --color-track-marker: #5f7469;
+    --color-todo: #ffb74d;
 
     --pico-primary-underline: rgba(127, 207, 159, 0.5);
     --pico-primary-hover: #a6e2bd;
@@ -119,9 +163,15 @@
     --pico-form-element-background-color: #2c3b33;
     --pico-form-element-border-color: #6f8479;
   }
+  :root:not([data-theme]) [data-school="sle"],
+  :root:not([data-theme]) [data-school="slvms"],
+  :root:not([data-theme]) [data-school="slvhs"] {
+    --school-accent: var(--school-red-dark);
+    --route-line: var(--school-red-dark);
+  }
 }
 @media (min-width: 1024px) {
-  :root:not([data-theme]) { --pico-font-size: 118.75%; }
+  :root:not([data-theme]) { --pico-font-size: 112.5%; }   /* 18px body on desktop */
 }
 
 /* ---------- Widths ----------
@@ -136,21 +186,28 @@
 
 /* ---------- Basics ---------- */
 html { overflow-x: hidden; }
-body { background: var(--bb-paper); }
+body { background: var(--color-background); }
 
+/* Heading scale from BRAND-GUIDE.md §3. ExtraBold is reserved for H1 and
+   sign-like statements; everything else heading-ish is Bold. */
 h1, h2, h3, .site-name {
-  font-family: var(--bb-heading-font);
-  font-weight: 800;
+  font-family: var(--font-heading);
+  font-weight: var(--weight-heading);
   letter-spacing: -0.01em;
 }
-h1 { font-size: 2.1rem; line-height: 1.1; }
-h2 { font-size: 1.6rem; line-height: 1.15; margin-bottom: 0.75rem; }
-h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+h1 { font-size: 2.35rem; font-weight: var(--weight-display); line-height: 1.08; }   /* 40px */
+h2 { font-size: 1.765rem; line-height: 1.15; margin-bottom: 0.75rem; }             /* 30px */
+h3 { font-size: 1.235rem; margin-bottom: 0.5rem; }                                 /* 21px */
+@media (min-width: 1024px) {
+  h1 { font-size: 2.89rem; }    /* 52px */
+  h2 { font-size: 1.89rem; }    /* 34px */
+  h3 { font-size: 1.28rem; }    /* 23px */
+}
 
 main > section + section { margin-top: 2.5rem; }
 
 :focus-visible {
-  outline: 3px solid var(--bb-focus);
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
 }
 
@@ -160,7 +217,7 @@ main > section + section { margin-top: 2.5rem; }
   top: -3rem;
   z-index: 1000;
   padding: 0.5rem 1rem;
-  background: var(--bb-paper);
+  background: var(--color-background);
   color: var(--pico-primary);
 }
 .skip-link:focus { top: 0.5rem; }
@@ -180,7 +237,7 @@ section[id] { scroll-margin-top: 1rem; }
  * The header sits on a cream "sky"; hand-drawn hills and redwoods from the
  * logo run along the bottom (assets/img/scene-*.svg, one per color scheme).
  */
-.scene { background: var(--bb-sky); }
+.scene { background: var(--color-elevated); }
 .scene { --scene-h: clamp(64px, 12vw, 180px); }
 .scene-art img {
   display: block;
@@ -196,7 +253,7 @@ section[id] { scroll-margin-top: 1rem; }
 @media (min-width: 576px) { .header-logo { width: 72px; height: 72px; } }
 .section-nav { flex-wrap: wrap; justify-content: flex-end; }
 .section-nav li { padding-block: 0.2rem; }
-.section-nav a { font-family: var(--bb-heading-font); font-weight: 700; }
+.section-nav a { font-family: var(--font-heading); font-weight: 700; }
 @media (max-width: 575px) {
   .site-header nav ul:first-child { margin-inline-start: 0; }
   .site-header nav ul:first-child li { padding-inline-start: 0; }
@@ -236,7 +293,7 @@ section[id] { scroll-margin-top: 1rem; }
   text-align: center;
 }
 .status-item a { color: inherit; text-decoration: underline; }
-.status-label { font-family: var(--bb-heading-font); }
+.status-label { font-family: var(--font-heading); }
 /* Cancelled has to be unmissable: full-width, big, with a "no" icon. */
 .status-cancelled {
   display: flex;
@@ -244,8 +301,8 @@ section[id] { scroll-margin-top: 1rem; }
   align-items: center;
   justify-content: center;
   gap: 0.25rem 0.6rem;
-  background: var(--bb-alert);
-  color: var(--bb-alert-fg);
+  background: var(--color-alert);
+  color: #ffffff;
   font-size: 1.35rem;
   font-weight: 700;
   padding-block: 1.25rem;
@@ -254,14 +311,14 @@ section[id] { scroll-margin-top: 1rem; }
 .status-icon { width: 1.6em; height: 1.6em; flex: none; }
 /* Info: plain sun gold. Changed: the same gold with black hazard
    stripes top and bottom, like a construction sign. */
-.status-info { background: var(--bb-sun); color: #16201b; font-weight: 700; }
+.status-info { background: var(--brand-gold); color: var(--ink); font-weight: 700; }
 .status-changed {
-  --stripes: repeating-linear-gradient(-45deg, #16201b 0 10px, var(--bb-sun) 10px 20px);
+  --stripes: repeating-linear-gradient(-45deg, var(--ink) 0 10px, var(--brand-gold) 10px 20px);
   background:
     var(--stripes) top / 100% 8px no-repeat,
     var(--stripes) bottom / 100% 8px no-repeat,
-    var(--bb-sun);
-  color: #16201b;
+    var(--brand-gold);
+  color: var(--ink);
   font-weight: 700;
   padding-block: 1.25rem;
 }
@@ -275,16 +332,16 @@ main { padding-top: 1.25rem; }
    destination board showing the next bus (filled by next-bus.js). */
 .bus-sign {
   border-radius: var(--pico-border-radius);
-  border-left: 8px solid #16201b;
+  border-left: 8px solid var(--ink);
   overflow: hidden;
 }
 .next-bus {
   margin: 0;
   padding: 0.55rem 1rem;
-  background: #16201b;
-  color: var(--bb-sun);
-  font-family: var(--bb-heading-font);
-  font-weight: 800;
+  background: var(--ink);
+  color: var(--brand-gold);
+  font-family: var(--font-heading);
+  font-weight: var(--weight-display);
   line-height: 1.3;
 }
 .next-bus.is-rolling::before {
@@ -294,7 +351,7 @@ main { padding-top: 1.25rem; }
   height: 0.6em;
   margin-right: 0.5em;
   border-radius: 50%;
-  background: var(--bb-sun);
+  background: var(--brand-gold);
   vertical-align: 0.05em;
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -304,8 +361,8 @@ main { padding-top: 1.25rem; }
 .hero-facts {
   margin: 0;
   padding: 0.5rem 1rem;
-  background: var(--bb-sun);
-  color: #16201b;
+  background: var(--brand-gold);
+  color: var(--ink);
 }
 .hero-facts > div {
   display: grid;
@@ -316,16 +373,16 @@ main { padding-top: 1.25rem; }
 .hero-facts > div + div { border-top: 1px solid rgba(22, 32, 27, 0.25); }
 .hero-facts dt {
   margin: 0;
-  font-family: var(--bb-heading-font);
+  font-family: var(--font-heading);
   font-weight: 700;
 }
-.hero-facts dd { margin: 0; color: #16201b; }
-.hero-facts strong { font-family: var(--bb-heading-font); font-weight: 800; color: #16201b; }
+.hero-facts dd { margin: 0; color: var(--ink); }
+.hero-facts strong { font-size: 1.15rem; font-family: var(--font-heading); font-weight: var(--weight-display); color: var(--ink); }
 
 /* ---------- Steps ---------- */
 .steps li { margin-bottom: 0.6rem; }
-.join-note { font-size: 0.95rem; color: var(--bb-muted); margin-top: -0.25rem; }
-.steps li::marker { font-family: var(--bb-heading-font); font-weight: 800; color: var(--bb-forest); }
+.join-note { font-size: 0.85rem; color: var(--color-muted); margin-top: -0.25rem; }
+.steps li::marker { font-family: var(--font-heading); font-weight: var(--weight-heading); color: var(--color-green); }
 
 /* ---------- Route map ---------- */
 .route-map-figure { margin-bottom: 1.5rem; }
@@ -334,12 +391,12 @@ main { padding-top: 1.25rem; }
   height: 340px;
   border-radius: var(--pico-border-radius);
   background: var(--pico-card-sectioning-background-color);
-  border: 1px solid var(--bb-rule);
+  border: 1px solid var(--color-divider);
   overflow: hidden;
 }
 .route-map-fallback { padding: 1rem; margin: 0; }
-.route-map-figure figcaption { font-size: 0.9rem; padding-top: 0.4rem; color: var(--bb-muted); }
-.route-tooltip { font-family: var(--bb-heading-font); font-weight: 700; }
+.route-map-figure figcaption { font-size: 0.85rem; padding-top: 0.4rem; color: var(--color-muted); }
+.route-tooltip { font-family: var(--font-heading); font-weight: 700; }
 .touch-hint { display: none; }
 @media (pointer: coarse) { .touch-hint { display: inline; } }
 /* Undo Pico's [role=button] styling on Leaflet's zoom controls */
@@ -386,7 +443,7 @@ main { padding-top: 1.25rem; }
   top: 0.35rem;
   bottom: -0.35rem;
   width: var(--line);
-  background: var(--bb-line);
+  background: var(--route-line);
 }
 /* stop marker */
 .route-stops li::before {
@@ -398,8 +455,8 @@ main { padding-top: 1.25rem; }
   width: var(--stop);
   height: var(--stop);
   border-radius: 50%;
-  background: var(--bb-paper);
-  border: 0.3rem solid var(--bb-line);
+  background: var(--color-background);
+  border: 0.3rem solid var(--route-line);
   box-sizing: border-box;
 }
 /* terminals: bigger, the school filled in */
@@ -410,21 +467,22 @@ main { padding-top: 1.25rem; }
   width: calc(var(--stop) + 0.4rem);
   height: calc(var(--stop) + 0.4rem);
 }
-.route-stops li:last-child::before { background: var(--bb-line); }
+.route-stops li:last-child::before { background: var(--route-line); }
 .route-stops .stop-name {
   display: block;
-  font-family: var(--bb-heading-font);
+  font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.3;
 }
 .route-stops .stop-time {
   display: block;
-  font-family: var(--bb-heading-font);
-  font-weight: 800;
-  color: var(--bb-red);
+  font-family: var(--font-heading);
+  font-weight: var(--weight-heading);
+  color: var(--school-accent);
+  font-size: 1.1rem;   /* key times: 18-22px */
 }
 
-.note { font-size: 0.95rem; color: var(--bb-muted); }
+.note { font-size: 0.85rem; color: var(--color-muted); }
 
 /* ---------- The page as a route ----------
  * On wide screens a green line runs down the left margin with a stop marker
@@ -439,7 +497,7 @@ main { padding-top: 1.25rem; }
     top: 0;
     bottom: -2.5rem;                  /* bridges the gap between sections */
     width: 6px;
-    background: var(--bb-forest);
+    background: var(--color-green);
     opacity: 0.85;
   }
   .stop:first-of-type::before, section.stop#join::before { top: 1rem; }
@@ -453,11 +511,11 @@ main { padding-top: 1.25rem; }
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: var(--bb-paper);
-    border: 5px solid var(--bb-forest);
+    background: var(--color-background);
+    border: 5px solid var(--color-green);
     box-sizing: border-box;
   }
-  .stop#contact > h2::before { background: var(--bb-forest); }
+  .stop#contact > h2::before { background: var(--color-green); }
 
   /* Scroll progress (progress.js adds .has-progress): the untraveled line is a
      pale track that fills in green as you scroll; stops fill when reached and
@@ -465,18 +523,18 @@ main { padding-top: 1.25rem; }
   .has-progress .stop::before {
     opacity: 1;
     background: linear-gradient(to bottom,
-      var(--bb-forest) calc(var(--fill, 0) * 100%),
-      var(--bb-track) calc(var(--fill, 0) * 100%));
+      var(--color-green) calc(var(--fill, 0) * 100%),
+      var(--color-track) calc(var(--fill, 0) * 100%));
   }
-  .has-progress .stop#contact::before { background: var(--bb-forest); }
+  .has-progress .stop#contact::before { background: var(--color-green); }
   .has-progress .stop > h2::before {
-    background: var(--bb-paper);
-    border-color: var(--bb-track-marker);
+    background: var(--color-background);
+    border-color: var(--color-track-marker);
     transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
   }
   .has-progress .stop.reached > h2::before {
-    background: var(--bb-forest);
-    border-color: var(--bb-forest);
+    background: var(--color-green);
+    border-color: var(--color-green);
   }
   .has-progress .stop.current > h2::before { transform: scale(1.5); }
 }
@@ -499,19 +557,19 @@ main { padding-top: 1.25rem; }
   height: 1.4rem;
   margin: 0.1rem 0 0;
   border-width: 2px;
-  border-color: var(--bb-forest);
+  border-color: var(--color-green);
 }
 .checklist input:checked + span {
-  color: var(--bb-muted);
+  color: var(--color-muted);
   text-decoration: line-through;
-  text-decoration-color: var(--bb-forest);
+  text-decoration-color: var(--color-green);
 }
 .all-set {
   display: none;
   margin: 0 0 1.5rem 1.25rem;
-  font-family: var(--bb-heading-font);
-  font-weight: 800;
-  color: var(--bb-forest);
+  font-family: var(--font-heading);
+  font-weight: var(--weight-heading);
+  color: var(--color-green);
 }
 .checklist:not(:has(input:not(:checked))) + .all-set { display: block; }
 .tips li { margin-bottom: 0.5rem; }
@@ -544,21 +602,21 @@ details summary { font-weight: 700; }
 .school-card h3 { margin: 0 0 0.4rem; font-size: 1.3rem; }
 .school-card p { margin: 0 0 0.6rem; }
 .school-card .card-status {
-  font-family: var(--bb-heading-font);
+  font-family: var(--font-heading);
   font-weight: 700;
   font-size: 0.95rem;
   margin-bottom: 0.5rem;
 }
 
 .school-card-live {
-  background: var(--bb-sun);
-  color: #16201b;
-  border-left: 8px solid #16201b;
+  background: var(--brand-gold);
+  color: var(--ink);
+  border-left: 8px solid var(--ink);
   text-decoration: none;
 }
-.school-card-live h3, .school-card-live p { color: #16201b; }
+.school-card-live h3, .school-card-live p { color: var(--ink); }
 .school-card-live .next-bus {
-  color: var(--bb-sun);
+  color: var(--brand-gold);
   margin: 0 0 0.75rem;
   padding: 0.4rem 0.7rem;
   border-radius: 4px;
@@ -566,27 +624,27 @@ details summary { font-weight: 700; }
 }
 .school-card-live .card-go {
   margin-top: auto;
-  font-family: var(--bb-heading-font);
-  font-weight: 800;
+  font-family: var(--font-heading);
+  font-weight: var(--weight-heading);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
 .school-card-live:hover .card-go { text-decoration-thickness: 3px; }
-.school-card-live:focus-visible { outline-color: var(--bb-forest); outline-offset: 3px; }
+.school-card-live:focus-visible { outline-color: var(--color-green); outline-offset: 3px; }
 
 .school-card-soon {
-  border: 2px dashed var(--bb-rule);
-  color: var(--bb-ink);
+  border: 2px dashed var(--color-divider);
+  color: var(--color-text);
 }
-.school-card-soon .card-status { color: var(--bb-muted); }
+.school-card-soon .card-status { color: var(--color-muted); }
 .school-card-soon .card-cta { margin-top: auto; }
 
 /* ---------- TODO markers (remove the class once content is final) ---------- */
 .todo {
   display: block;
   padding: 0.4rem 0.6rem;
-  border: 2px dashed var(--bb-todo);
-  color: var(--bb-todo);
+  border: 2px dashed var(--color-todo);
+  color: var(--color-todo);
   font-size: 0.9rem;
   border-radius: 4px;
   overflow-wrap: anywhere;
@@ -605,19 +663,19 @@ p.todo { margin-block: 0.5rem 1rem; }
 .sendoff {
   margin: 0.25rem 0 0;
   padding-bottom: 1.5rem;
-  font-family: var(--bb-heading-font);
-  font-weight: 800;
+  font-family: var(--font-heading);
+  font-weight: var(--weight-display);
   font-size: 1.3rem;
-  color: var(--bb-forest);
+  color: var(--color-green);
 }
 .footer-floor {
-  background: var(--bb-brown);
-  color: var(--bb-cream);
-  font-size: 0.9rem;
+  background: var(--color-footer);
+  color: var(--brand-cream);
+  font-size: 0.85rem;   /* small / metadata: 14-15px */
   padding-block: 1.5rem 2.5rem;
 }
-.footer-floor p { color: var(--bb-cream); }
+.footer-floor p { color: var(--brand-cream); }
 .footer-floor p:last-child { margin-bottom: 0; }
-.footer-floor a { color: var(--bb-cream); text-decoration-color: rgba(246, 235, 215, 0.6); }
-.footer-floor a:hover { text-decoration-color: var(--bb-cream); }
-.footer-floor :focus-visible { outline-color: var(--bb-cream); }
+.footer-floor a { color: var(--brand-cream); text-decoration-color: rgba(246, 235, 215, 0.6); }
+.footer-floor a:hover { text-decoration-color: var(--brand-cream); }
+.footer-floor :focus-visible { outline-color: var(--brand-cream); }

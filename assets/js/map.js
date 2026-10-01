@@ -31,7 +31,7 @@
   function build(geojson) {
     var L = window.L;
     var touch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
-    var routeColor = getComputedStyle(box).getPropertyValue("--bb-route").trim() || "#1f7a4d";
+    var routeColor = getComputedStyle(box).getPropertyValue("--school-red").trim() || "#C1121F";
 
     box.innerHTML = "";
     var map = L.map(box, {

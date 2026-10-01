@@ -4,7 +4,7 @@ Static site for the SLV Bike Bus, a morning group ride to San Lorenzo Valley Ele
 Plain HTML/CSS/JS, no build step. Hosted on GitHub Pages from `main` (repo root).
 
 - **Posting a rain/cancel notice:** see [STATUS-HOWTO.md](STATUS-HOWTO.md).
-- **Design tokens:** see [DESIGN-PLAN.md](DESIGN-PLAN.md).
+- **Brand & style guide (colors, type, voice, tokens):** see [BRAND-GUIDE.md](BRAND-GUIDE.md). The CSS tokens in `assets/css/site.css` follow its §10.
 
 ## Layout
 
