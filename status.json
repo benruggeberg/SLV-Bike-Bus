@@ -1,7 +1,7 @@
 {
   "sle": {
-    "date": "2026-09-30",
-    "level": "cancelled",
-    "message": "weather is too nice"
+    "date": "2000-01-01",
+    "level": "info",
+    "message": "Cleared."
   }
 }
