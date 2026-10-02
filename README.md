@@ -44,6 +44,11 @@ localhost/LAN previews. The disclaimer page footer says so.
 - To stop counting your own visits on a device, open
   `https://slvbikebus.org/#toggle-goatcounter` once in that browser.
 
+## Link convention
+
+Links to other sites open in a new tab: add `target="_blank" rel="noopener"`.
+Exceptions: `mailto:` links, and the Android `geo:` maps link (it hands off to an app).
+
 ## Preview locally
 
 ```sh

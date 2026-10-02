@@ -18,6 +18,7 @@
     var apple = /iPhone|iPad|iPod|Macintosh/.test(ua);   // iPads report "Macintosh" too
     if (/Android/i.test(ua)) {
       a.href = "geo:" + lat + "," + lon + "?q=" + lat + "," + lon + "(" + label + ")";
+      a.removeAttribute("target");   // hands off to the maps app; a new tab would be left blank
     } else if (apple) {
       a.href = "https://maps.apple.com/?ll=" + lat + "," + lon + "&q=" + label;
     }
@@ -57,9 +58,12 @@
       tap: false
     });
 
+    // Credit links open in a new tab like every other off-site link.
+    map.attributionControl.setPrefix('<a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a>');
+
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     var layer = L.geoJSON(geojson, {
