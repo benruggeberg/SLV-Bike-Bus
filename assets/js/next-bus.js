@@ -64,11 +64,10 @@
   function message(sched, cancelledDate) {
     var now = nowLA();
     var meet = toMinutes(sched.meetTime), depart = toMinutes(sched.departTime), arrive = toMinutes(sched.arriveBy);
-    var meetAt = ". Meet at " + clock(sched.meetTime);
 
     if (isRidingDay(now.date, sched, cancelledDate)) {
       var untilMeet = meet - now.minutes;
-      if (untilMeet > 90) return { text: "Next bus: Today" + meetAt };
+      if (untilMeet > 90) return { text: "Next bus: Today" };   // times are right below, on the sign
       if (untilMeet > 1) return { text: "Meet in " + untilMeet + " minutes. Leaving at " + clock(sched.departTime) };
       if (now.minutes < depart) return { text: "Meeting now. Leaving at " + clock(sched.departTime), rolling: true };
       if (now.minutes === depart) return { text: "The bus is leaving now", rolling: true };
@@ -80,7 +79,7 @@
     for (var t = toUTC(now.date) + DAY_MS; t <= toUTC(sched.end); t += DAY_MS) {
       var d = toStr(t);
       if (isRidingDay(d, sched, cancelledDate)) {
-        return { text: prefix + (beforeSeason ? "First bus: " : "Next bus: ") + dayLabel(d, now.date) + meetAt };
+        return { text: prefix + (beforeSeason ? "First bus: " : "Next bus: ") + dayLabel(d, now.date) };
       }
     }
     if (beforeSeason) return null;
