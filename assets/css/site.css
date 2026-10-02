@@ -161,6 +161,7 @@
     --pico-primary-inverse: #111714;
     --pico-card-sectioning-background-color: #2c3b33;
     --pico-form-element-background-color: #2c3b33;
+    --pico-form-element-active-background-color: #2c3b33;   /* focused fields stay brand green, not Pico navy */
     --pico-form-element-border-color: #6f8479;
   }
   :root:not([data-theme]) [data-school="sle"],
@@ -679,12 +680,19 @@ details summary { font-weight: 700; }
  * bottom of the landing page when JavaScript is off.
  */
 .interest-panel { margin-top: 2.5rem; }
-.interest-dialog > article { width: min(32rem, calc(100vw - 2rem)); }
+.interest-dialog > article {
+  width: min(32rem, calc(100vw - 2rem));
+  --pico-card-background-color: var(--color-background);
+  --pico-card-sectioning-background-color: var(--color-elevated);
+}
 .interest-form fieldset { margin-bottom: 1rem; }
 .interest-form legend { font-weight: var(--weight-body-bold); }
 .form-note { font-size: 0.85rem; color: var(--color-muted); }
 .form-status { min-height: 1.5em; margin: 0.5rem 0 0; font-weight: var(--weight-body-bold); }
-.form-thanks { font-family: var(--font-heading); font-weight: var(--weight-heading); font-size: 1.15rem; color: var(--color-green); }
+.form-thanks { text-align: center; padding-block: 0.5rem; }
+.form-thanks h2 { margin-bottom: 0.5rem; }
+.form-thanks p { margin-bottom: 1.25rem; }
+.form-thanks button { width: auto; padding-inline: 2rem; }
 /* Honeypot: off-screen for people, still in the form for bots */
 .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 

@@ -105,13 +105,22 @@
           err.friendly = res && res.message;   // the script's own wording, e.g. "Please add a valid email"
           throw err;
         }
+        // Swap the whole panel for a simple thank-you (restored when the dialog closes).
+        var header = article.querySelector("header");
+        header.hidden = true;
         form.hidden = true;
-        var thanks = document.createElement("p");
+        var thanks = document.createElement("div");
         thanks.className = "form-thanks";
         thanks.setAttribute("role", "status");
-        thanks.textContent = "Thanks, you're on the list! We'll be in touch when a bike bus is forming. The count on the card updates in a minute or two.";
+        thanks.innerHTML = '<h2>Thanks, you\'re on the list!</h2><p>We\'ll be in touch when a bike bus is forming at your school.</p>';
+        var done = document.createElement("button");
+        done.type = "button";
+        done.textContent = "Close";
+        done.addEventListener("click", function () { dialog.close(); });
+        thanks.appendChild(done);
         article.appendChild(thanks);
-        dialog.addEventListener("close", function () { thanks.remove(); }, { once: true });
+        done.focus();
+        dialog.addEventListener("close", function () { thanks.remove(); header.hidden = false; }, { once: true });
         if (window.goatcounter && window.goatcounter.count) {
           window.goatcounter.count({ path: "interest-submit", title: "Interest form submitted", event: true });
         }
