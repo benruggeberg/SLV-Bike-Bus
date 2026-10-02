@@ -3,8 +3,10 @@
  *
  * 1. Counts: reads data/interest.json (totals only, refreshed by the
  *    update-interest workflow) and fills each card's .interest-count:
- *    "12 families interested · 2 ready to lead" once a school has
- *    SHOW_AT or more, otherwise "Be one of the first."
+ *    0 → "Be one of the first."
+ *    1-2 → "1 family interested so far. Be next!" (leaders left out at small
+ *          numbers, where they could identify someone)
+ *    FULL_AT+ → "12 families interested · 2 ready to lead"
  * 2. Form: moves #interest into a <dialog> opened from the cards' buttons,
  *    with that school pre-ticked, and submits it to the Google Apps Script
  *    without leaving the page. Without JS, the form sits at the bottom of the
@@ -13,7 +15,7 @@
 (function () {
   "use strict";
 
-  var SHOW_AT = 3;
+  var FULL_AT = 3;
 
   // ---- counts ----
   var countEls = document.querySelectorAll(".interest-count[data-school]");
@@ -24,8 +26,10 @@
         Array.prototype.forEach.call(countEls, function (el) {
           var c = data[el.getAttribute("data-school")] || {};
           var n = Number(c.interested) || 0, leaders = Number(c.leaders) || 0;
-          if (n >= SHOW_AT) {
+          if (n >= FULL_AT) {
             el.textContent = n + " families interested" + (leaders > 0 ? " · " + leaders + " ready to lead" : "");
+          } else if (n > 0) {
+            el.textContent = n + (n === 1 ? " family" : " families") + " interested so far. Be next!";
           } else {
             el.textContent = "Be one of the first.";
           }
