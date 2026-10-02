@@ -2,9 +2,10 @@
 
 Parents at schools without a bike bus (SLV Middle, SLV High) tap **I'm interested**
 on the home page, fill in a short form, and their answers land in a **private Google
-Sheet** that only you can see. The cards show "N families interested · M ready to
-lead" from 3 families up; with 1-2 it says "1 family interested so far. Be next!",
-and with none, "Be one of the first."
+Sheet** that only you can see. Each card's status line shows progress toward the
+goal of 3 families and 1 leader: "Not started", then "Not started · 2 families
+interested", then "Not started · 3 families", and finally "Forming · 4 families, 1 leader"
+(gold dot) once there are 3+ families and a leader. Leaders only show from 3 families up.
 
 How the pieces fit:
 

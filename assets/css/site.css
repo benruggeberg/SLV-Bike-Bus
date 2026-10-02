@@ -669,11 +669,29 @@ details summary { font-weight: 700; }
 }
 .school-card-soon .card-status { color: var(--color-muted); }
 .school-card-soon .card-cta { margin-top: auto; }
-.interest-count {
-  font-family: var(--font-heading);
-  font-weight: var(--weight-heading);
-  color: var(--color-green);
+/* Status line on "not started" cards: hollow ring (not reached yet, like an
+   unreached stop) · count. Turns gold "Forming" once the goal is met. */
+.card-soon-status { display: flex; flex-wrap: wrap; align-items: center; gap: 0 0.45em; }
+.status-dot {
+  width: 0.65em;
+  height: 0.65em;
+  border-radius: 50%;
+  border: 2px solid var(--color-muted);
+  box-sizing: border-box;
 }
+.interest-count { color: var(--color-text); }
+.interest-count::before {   /* a drawn dot: the font's "·" sits off-center */
+  content: "";
+  display: inline-block;
+  width: 0.25em;
+  height: 0.25em;
+  margin: 0 0.5em 0 0.05em;
+  border-radius: 50%;
+  background: var(--color-muted);
+  vertical-align: 0.2em;
+}
+.card-soon-status.is-forming .status-dot { background: var(--brand-gold); border-color: var(--brand-gold); }
+.card-soon-status.is-forming .status-label { color: var(--color-text); }
 
 /* ---------- "I'm interested" form ----------
  * A pop-up panel (native <dialog>, styled by Pico) opened from the cards; at the

@@ -2,11 +2,7 @@
  * "I'm interested" sign-ups for schools without a bike bus yet.
  *
  * 1. Counts: reads data/interest.json (totals only, refreshed by the
- *    update-interest workflow) and fills each card's .interest-count:
- *    0 → "Be one of the first."
- *    1-2 → "1 family interested so far. Be next!" (leaders left out at small
- *          numbers, where they could identify someone)
- *    FULL_AT+ → "12 families interested · 2 ready to lead"
+ *    update-interest workflow) and fills each card's status line (rules below).
  * 2. Form: moves #interest into a <dialog> opened from the cards' buttons,
  *    with that school pre-ticked, and submits it to the Google Apps Script
  *    without leaving the page. Without JS, the form sits at the bottom of the
@@ -15,25 +11,35 @@
 (function () {
   "use strict";
 
-  var FULL_AT = 3;
-
   // ---- counts ----
-  var countEls = document.querySelectorAll(".interest-count[data-school]");
-  if (countEls.length && window.fetch) {
+  // Status line on each "not started" card:
+  //   0       → "Not started"
+  //   1-2     → "Not started · 2 families interested"
+  //   3+      → "Not started · 3 families"
+  //   goal    → "Forming · 4 families, 1 leader" (gold dot): GOAL_FAMILIES + a leader
+  // Leaders are only shown from GOAL_FAMILIES up, where they can't identify someone.
+  var GOAL_FAMILIES = 3;
+  var statusEls = document.querySelectorAll(".card-soon-status[data-school]");
+  if (statusEls.length && window.fetch) {
     fetch("data/interest.json?t=" + Date.now(), { cache: "no-store" })
       .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
       .then(function (data) {
-        Array.prototype.forEach.call(countEls, function (el) {
+        Array.prototype.forEach.call(statusEls, function (el) {
           var c = data[el.getAttribute("data-school")] || {};
           var n = Number(c.interested) || 0, leaders = Number(c.leaders) || 0;
-          if (n >= FULL_AT) {
-            el.textContent = n + " families interested" + (leaders > 0 ? " · " + leaders + " ready to lead" : "");
-          } else if (n > 0) {
-            el.textContent = n + (n === 1 ? " family" : " families") + " interested so far. Be next!";
+          var count = el.querySelector(".interest-count");
+          var families = n + (n === 1 ? " family" : " families");
+          if (n === 0) return;
+          if (n < GOAL_FAMILIES) {
+            count.textContent = families + " interested";
           } else {
-            el.textContent = "Be one of the first.";
+            count.textContent = families + (leaders > 0 ? ", " + leaders + (leaders === 1 ? " leader" : " leaders") : "");
+            if (leaders > 0) {
+              el.classList.add("is-forming");
+              el.querySelector(".status-label").textContent = "Forming";
+            }
           }
-          el.hidden = false;
+          count.hidden = false;
         });
       })
       .catch(function (err) { console.warn("[interest] counts not shown:", err); });
