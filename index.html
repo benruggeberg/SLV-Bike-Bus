@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="assets/vendor/pico/pico.min.css">
   <link rel="stylesheet" href="assets/css/site.css">
   <script src="assets/js/status.js" defer></script>
+  <script src="assets/js/interest.js" defer></script>
   <!-- Privacy-friendly, cookieless page counts (self-hosted script; see assets/vendor/goatcounter/README.txt) -->
   <script data-goatcounter="https://slvbikebus.goatcounter.com/count" async src="assets/vendor/goatcounter/count.js"></script>
 </head>
@@ -61,7 +62,8 @@
             <h3>SLV Middle School</h3>
             <p class="card-status">No bike bus yet</p>
             <p>Want one? Let us know you're interested.</p>
-            <p class="card-cta"><a href="mailto:hello@slvbikebus.org?subject=Middle%20school%20bike%20bus" data-goatcounter-click="lead-slvms" data-goatcounter-title="I can help lead (Middle School)" role="button" class="outline">I can help lead</a></p>
+            <p class="interest-count" data-school="slvms" hidden></p>
+            <p class="card-cta"><a href="#interest" class="interest-open outline" role="button" data-school="slvms" data-goatcounter-click="interest-open-slvms" data-goatcounter-title="I'm interested (Middle School)">I'm interested</a></p>
           </div>
         </li>
         <li>
@@ -69,10 +71,44 @@
             <h3>SLV High School</h3>
             <p class="card-status">No bike bus yet</p>
             <p>Want one? Let us know you're interested.</p>
-            <p class="card-cta"><a href="mailto:hello@slvbikebus.org?subject=High%20school%20bike%20bus" data-goatcounter-click="lead-slvhs" data-goatcounter-title="I can help lead (High School)" role="button" class="outline">I can help lead</a></p>
+            <p class="interest-count" data-school="slvhs" hidden></p>
+            <p class="card-cta"><a href="#interest" class="interest-open outline" role="button" data-school="slvhs" data-goatcounter-click="interest-open-slvhs" data-goatcounter-title="I'm interested (High School)">I'm interested</a></p>
           </div>
         </li>
       </ul>
+    </section>
+
+    <!-- "I'm interested" form. interest.js moves it into a pop-up panel opened from
+         the cards; without JavaScript it stays here and posts straight to the
+         Google Apps Script (see tools/interest-apps-script.gs, INTEREST-HOWTO.md). -->
+    <section id="interest" class="interest-panel" aria-labelledby="interest-title">
+      <article>
+        <header>
+          <h2 id="interest-title">Get a bike bus at your school</h2>
+          <p>Tell us you're interested. When a parent steps up to lead, we'll get in touch.</p>
+        </header>
+        <form class="interest-form" method="post" action="APPS_SCRIPT_URL">
+          <label>Your name
+            <input name="name" required maxlength="100" autocomplete="name">
+          </label>
+          <label>Email
+            <input type="email" name="email" required maxlength="200" autocomplete="email">
+          </label>
+          <fieldset>
+            <legend>Which school?</legend>
+            <label><input type="checkbox" name="schools" value="slvms"> SLV Middle School</label>
+            <label><input type="checkbox" name="schools" value="slvhs"> SLV High School</label>
+          </fieldset>
+          <label><input type="checkbox" name="lead" value="yes"> I'd be willing to help lead a ride</label>
+          <!-- Honeypot: hidden from people; bots that fill it are ignored. -->
+          <div class="hp" aria-hidden="true">
+            <label>Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label>
+          </div>
+          <p class="form-note">We save this to a private Google Sheet and only use it to contact you about a bike bus at your school. Email <a href="mailto:hello@slvbikebus.org">hello@slvbikebus.org</a> anytime to be removed.</p>
+          <button type="submit">Count me in</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </article>
     </section>
   </main>
 

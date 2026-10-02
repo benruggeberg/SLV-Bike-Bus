@@ -4,6 +4,7 @@ Static site for the SLV Bike Bus, a morning group ride to San Lorenzo Valley Ele
 Plain HTML/CSS/JS, no build step. Hosted on GitHub Pages from `main` (repo root).
 
 - **Posting a rain/cancel notice:** see [STATUS-HOWTO.md](STATUS-HOWTO.md).
+- **"I'm interested" sign-ups (Middle/High School):** see [INTEREST-HOWTO.md](INTEREST-HOWTO.md).
 - **Brand & style guide (colors, type, voice, tokens):** see [BRAND-GUIDE.md](BRAND-GUIDE.md). The CSS tokens in `assets/css/site.css` follow its §10.
 
 ## Layout
@@ -38,7 +39,7 @@ Cookieless page counts with GoatCounter: dashboard at https://slvbikebus.goatcou
 The script is self-hosted (`assets/vendor/goatcounter/`), sets no cookies, and skips
 localhost/LAN previews. The disclaimer page footer says so.
 
-- Clicks on the "I can help lead" buttons are counted as events `lead-slvms` / `lead-slvhs`.
+- "I'm interested" opens are counted as `interest-open-slvms` / `interest-open-slvhs`; completed sign-ups as `interest-submit`.
 - To measure flyers, point new QR codes at `https://slvbikebus.org/sle/?ref=flyer`;
   GoatCounter reports `ref` as the source. (The `/sle/` path itself never changes.)
 - To stop counting your own visits on a device, open
@@ -99,19 +100,3 @@ Decided / done:
 - Any bike can ride; no need to say so. No handouts, photo policy, or partner thanks line for now.
 - Disclaimer, safety tips, and FAQ answers approved by Ben.
 - Custom domain live with HTTPS enforced (Porkbun DNS: 4 GitHub A records + www CNAME; domain verified).
-
-## Later: "interested" sign-ups for Middle and High School
-
-Goal: on the Middle/High School cards, let parents register interest (email, and a
-checkbox for "I'd help lead"), so there's a contact list ready when a leader appears,
-and the card can show a live count like "5 families interested".
-
-GitHub Pages can't store form submissions, so this needs a small backend.
-Options, simplest first:
-1. Hosted form service (e.g. Tally or Formspree) for the sign-up, plus a count in a
-   JSON file (like `status.json`) that Ben updates by hand. No new infrastructure,
-   but the count is manual.
-2. A Cloudflare Worker + D1 (free tier) with a POST endpoint for sign-ups and a GET
-   endpoint that returns only the counts. The count updates live; emails stay private.
-Either way: collect only email, school, and "would help lead"; state how emails are
-used next to the form; never show emails publicly.

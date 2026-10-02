@@ -668,6 +668,25 @@ details summary { font-weight: 700; }
 }
 .school-card-soon .card-status { color: var(--color-muted); }
 .school-card-soon .card-cta { margin-top: auto; }
+.interest-count {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-heading);
+  color: var(--color-green);
+}
+
+/* ---------- "I'm interested" form ----------
+ * A pop-up panel (native <dialog>, styled by Pico) opened from the cards; at the
+ * bottom of the landing page when JavaScript is off.
+ */
+.interest-panel { margin-top: 2.5rem; }
+.interest-dialog > article { width: min(32rem, calc(100vw - 2rem)); }
+.interest-form fieldset { margin-bottom: 1rem; }
+.interest-form legend { font-weight: var(--weight-body-bold); }
+.form-note { font-size: 0.85rem; color: var(--color-muted); }
+.form-status { min-height: 1.5em; margin: 0.5rem 0 0; font-weight: var(--weight-body-bold); }
+.form-thanks { font-family: var(--font-heading); font-weight: var(--weight-heading); font-size: 1.15rem; color: var(--color-green); }
+/* Honeypot: off-screen for people, still in the form for bots */
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 
 /* ---------- TODO markers (remove the class once content is final) ---------- */
 .todo {

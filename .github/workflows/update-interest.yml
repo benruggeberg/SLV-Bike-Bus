@@ -1,0 +1,65 @@
+# Refresh the "N families interested" counts on the landing page.
+# Triggered by the Google Apps Script right after each sign-up (see
+# tools/interest-apps-script.gs), plus a daily safety run. Reads ONLY totals
+# from the script's public endpoint and writes data/interest.json.
+# Setup: INTEREST-HOWTO.md. The endpoint URL is the repo variable INTEREST_URL.
+name: Update interest counts
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 14 * * *"   # daily, ~7am Pacific
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-interest
+  cancel-in-progress: true   # a burst of sign-ups collapses into one run
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    if: ${{ vars.INTEREST_URL != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch totals and write data/interest.json
+        env:
+          INTEREST_URL: ${{ vars.INTEREST_URL }}
+        run: |
+          python3 - <<'PY'
+          import json, os, sys, urllib.request
+          url = os.environ["INTEREST_URL"]
+          if not url.startswith("https://script.google.com/"):
+              sys.exit("::error::INTEREST_URL must be the Apps Script web app URL")
+          req = urllib.request.Request(url, headers={"User-Agent": "slvbikebus-interest-counter"})
+          with urllib.request.urlopen(req, timeout=30) as r:
+              raw = json.load(r)
+
+          # Treat the response as untrusted: keep only known schools and sane whole numbers.
+          def num(v):
+              return v if isinstance(v, int) and not isinstance(v, bool) and 0 <= v <= 100000 else None
+          out = {}
+          for school in ("slvms", "slvhs"):
+              entry = raw.get(school) if isinstance(raw, dict) else None
+              if not isinstance(entry, dict) or num(entry.get("interested")) is None or num(entry.get("leaders")) is None:
+                  sys.exit(f"::error::Unexpected totals for {school}; leaving counts unchanged.")
+              out[school] = {"interested": entry["interested"], "leaders": entry["leaders"]}
+
+          with open("data/interest.json", "w") as f:
+              json.dump(out, f, indent=2)
+              f.write("\n")
+          print(json.dumps(out))
+          PY
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet data/interest.json; then
+            echo "Counts unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update interest counts" -- data/interest.json
+          git push
