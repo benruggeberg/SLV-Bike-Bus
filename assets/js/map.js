@@ -8,6 +8,21 @@
 (function () {
   "use strict";
 
+  // "Open in your maps app": one link that suits the device. Android opens a
+  // geo: link (the default maps app, or a chooser); Apple devices open Apple
+  // Maps; everything else keeps the Google Maps link from the HTML.
+  Array.prototype.forEach.call(document.querySelectorAll("a.open-in-maps"), function (a) {
+    var lat = a.getAttribute("data-lat"), lon = a.getAttribute("data-lon");
+    var label = encodeURIComponent(a.getAttribute("data-label") || "");
+    var ua = navigator.userAgent || "";
+    var apple = /iPhone|iPad|iPod|Macintosh/.test(ua);   // iPads report "Macintosh" too
+    if (/Android/i.test(ua)) {
+      a.href = "geo:" + lat + "," + lon + "?q=" + lat + "," + lon + "(" + label + ")";
+    } else if (apple) {
+      a.href = "https://maps.apple.com/?ll=" + lat + "," + lon + "&q=" + label;
+    }
+  });
+
   var box = document.getElementById("route-map");
   if (!box) return;
 
